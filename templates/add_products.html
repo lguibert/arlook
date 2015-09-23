@@ -1,0 +1,65 @@
+<div ng-controller="ProductsController">
+    <form role="form" name="addProductForm" novalidate class="simple-form" ng-submit="addProductForm.$valid">
+
+        <div class="form-group">
+            <label for="name">Nom: </label>
+            <input class="form-control" id="name" name="name" type="text" ng-model="product.name" required/>
+
+            <div  ng-show="addProductForm.$submitted || addProductForm.name.$touched">
+                <div class="error" ng-show="addProductForm.name.$error.required">Le nom de produit est obligatoire</div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="description">Description: </label>
+            <textarea class="form-control" id="description" ng-model="product.description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="sellprice">Prix de vente HT: </label>
+            <input class="form-control" id="sellprice" name="sellprice" type="number" step="0.01" min="0"
+                   ng-model="product.sellprice"
+                   required/>
+
+            <div ng-show="addProductForm.$submitted || addProductForm.sellprice.$touched">
+                <div ng-show="addProductForm.sellprice.$error.required">Le prix de vente est obligatoire</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="buyprice">Prix d'achat HT: </label>
+            <input class="form-control" id="buyprice" name="buyprice" type="number" step="0.01" min="0"
+                   ng-model="product.buyprice"
+                   required/>
+
+            <div ng-show="addProductForm.$submitted || addProductForm.buyprice.$touched">
+                <div ng-show="addProductForm.buyprice.$error.required">Le prix d'achat est obligatoire</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="datebuy">Date d'achat: </label>
+            <input class="form-control" id="datebuy" name="datebuy" type="date" ng-model="product.datebuy"
+                   required/>
+
+            <div ng-show="addProductForm.$submitted || addProductForm.datebuy.$touched">
+                <div ng-show="addProductForm.datebuy.$error.required">La date d'achat est obligatoire</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Stock: </label>
+            <input class="form-control" id="stock" name="stock" type="number" step="1" min="0" ng-model="product.stock"
+                   required/>
+
+            <div ng-show="addProductForm.$submitted || addProductForm.stock.$touched">
+                <div ng-show="addProductForm.stock.$error.required">Le stock est obligatoire</div>
+            </div>
+        </div>
+
+
+        <input class="btn btn-default" type="submit" ng-click="add_new(product)" ng-disabled="addProductForm.$invalid" ng-class="{true: 'disabled'}[addProductForm.$invalid]"
+               value="Enregistrer"/>
+    </form>
+</div>

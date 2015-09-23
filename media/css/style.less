@@ -1,0 +1,24 @@
+@import "style_base.css";
+
+@bg_error: #FFCCCC;
+@color_error: #DA300E;
+
+.border-radius(@radius: 10px) {
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.products{
+  border: solid black 1px;
+  margin: 0 5px 0 5px;
+  height: 200px;
+}
+
+.error{
+  background-color: @bg_error;
+  padding: 5px;
+  margin: 5px;
+  color: @color_error;
+  .border-radius;
+}

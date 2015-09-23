@@ -1,0 +1,62 @@
+.message {
+    padding: 15px;
+    text-align: center;
+    position: fixed;
+    top: 35%;
+    left: 40%;
+    width: 300px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    display: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+.success {
+    background-color: #33AD5C;
+    color: white;
+}
+
+#wrap {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#main {
+    overflow: auto;
+    padding-bottom: 50px;
+}
+
+footer {
+    position: relative;
+    clear: both;
+    height: 50px;
+    background-color: #333;
+    text-align: center;
+    color: white;
+    margin-top: 1px;
+}
+
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.loading div {
+    position: absolute;
+    top: 42%;
+    left: 42%;
+    padding: 50px 50px 30px 50px;
+    border: double black 5px;
+}
+
+.loading div span {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
