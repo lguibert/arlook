@@ -1,13 +1,6 @@
 var app = angular.module('arlook', ['ngRoute', 'ngAnimate', 'ngSanitize']);
 var server = "http://dev.lucasguibert.com:8000/";
 
-app.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider
-        .when('/', {templateUrl: 'templates/home.html'})
-        .when('/products/new/', {templateUrl: 'templates/add_products.html'})
-        .otherwise({redirectTo: '/'});
-}]);
-
 
 app.service('LoadingState', ['$rootScope', function ($rootScope) {
     return {

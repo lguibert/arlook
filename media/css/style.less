@@ -2,6 +2,7 @@
 
 @bg_error: #FFCCCC;
 @color_error: #DA300E;
+@max_size: 200px;
 
 .border-radius(@radius: 10px) {
   -moz-border-radius: @radius;
@@ -13,6 +14,20 @@
   border: solid black 1px;
   margin: 0 5px 0 5px;
   height: 200px;
+
+  img{
+    max-height: @max_size;
+    max-width: @max_size;
+  }
+}
+
+.product{
+  .products;
+  border: none;
+  img{
+    max-height: @max_size * 3;
+    max-width: @max_size * 3;
+  }
 }
 
 .error{
@@ -21,4 +36,9 @@
   margin: 5px;
   color: @color_error;
   .border-radius;
+}
+
+.form-group img{
+  max-height: @max_size;
+  max-width: @max_size;
 }

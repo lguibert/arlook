@@ -1,5 +1,5 @@
 <div ng-controller="ProductsController">
-    <form role="form" name="addProductForm" novalidate class="simple-form" ng-submit="addProductForm.$valid">
+    <form role="form" enctype="multipart/form-data" name="addProductForm" novalidate class="simple-form" ng-submit="addProductForm.$valid">
 
         <div class="form-group">
             <label for="name">Nom: </label>
@@ -56,6 +56,12 @@
             <div ng-show="addProductForm.$submitted || addProductForm.stock.$touched">
                 <div ng-show="addProductForm.stock.$error.required">Le stock est obligatoire</div>
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Image: </label>
+            <input class="form-control" id="image" fileread="uploadimage" ng-file-select="onFileSelect($files)" name="image" type="file" ng-model="product.image"/>
+            <img ng-src="{{imageSrc}}" />
         </div>
 
 
