@@ -22,6 +22,22 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
                     deferred.reject(null);
                 });
             return deferred.promise;
+        },
+        addProduct: function (product) {
+            var deferred = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: server + 'products/add/',
+                    data: product,
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                })
+                .success(function (data) {
+                    deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(null);
+                });
+            return deferred.promise;
         }
     }
     return factory;
@@ -37,7 +53,7 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
         LoadingState.setLoadingState(true);
         $scope.loading = LoadingState.getLoadingState();
 
-        $scope.products = ProductsFactory.getProducts().then(function (data) {
+        ProductsFactory.getProducts().then(function (data) {
             $scope.products = data;
 
             LoadingState.setLoadingState(false);
@@ -50,7 +66,17 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
     }
 
 
-    $scope.add_new = function(product){
-        console.log(product);
+    $scope.add_new = function (product) {
+        ProductsFactory.addProduct(product).then(function (data) {
+                displayMessage("Produit enregistré.", "success");
+                $scope.product = '';
+                $scope.addProductForm.$setPristine();
+                $scope.addProductForm.$setUntouched();
+            },
+            function (msg) {
+                displayMessage(msg, "error");
+            }
+        )
+        ;
     };
 }]);
