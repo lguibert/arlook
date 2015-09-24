@@ -1,0 +1,17 @@
+<div class="container" ng-controller="ProductsController">
+    <div class="col-xs-12 col-lg-12 col-md-12">
+        <a class="product-link" ng-href="#/product/{{product.fields['prod_uuid']}}" ng-repeat="product in products track by $index">
+            <div class="col-xs-2 col-lg-2 col-md-2 products">
+                <div class="imageable">
+                    <img src="{{product.fields['prod_image']}}"/>
+                </div>
+                <div class="textable">
+                    <h1>{{product.fields['prod_name']}}</h1>
+                    <ul>
+                        <li>Stock: {{product.fields['prod_stock']}}</li>
+                    </ul>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

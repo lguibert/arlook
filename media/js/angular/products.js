@@ -38,13 +38,26 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
                     deferred.reject(null);
                 });
             return deferred.promise;
+        },
+        getTVA: function(){
+            var deferred = $q.defer();
+            $http.get(server + 'tva/', {cache: true})
+                .success(function (data) {
+                    deferred.resolve(angular.fromJson(data));
+                })
+                .error(function (data) {
+                    deferred.reject(null);
+                });
+            return deferred.promise;
         }
     }
     return factory;
 }]);
 
 
-app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'ProductsFactory', 'LoadingState', 'fileReader', function ($scope, $rootScope, superCache, ProductsFactory, LoadingState, fileReader) {
+
+
+app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'ProductsFactory', 'LoadingState', 'fileReader', '$route', function ($scope, $rootScope, superCache, ProductsFactory, LoadingState, fileReader, $route) {
     var cache = superCache.get('products');
 
     if (cache) {
@@ -65,14 +78,31 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
         });
     }
 
+    $scope.loadTVA = function(){
+        ProductsFactory.getTVA().then(function(data){
+            $scope.tva = data;
+        });
+    };
+
+    $scope.sellpriceTTC = function(){
+        $scope.$watch(['sellprice', 'tva'], function(){
+            if($scope.product.tva && $scope.product.sellprice){
+                var tva = parseInt(angular.element('#tva :selected').html().split("%")[0]);
+                var price = $scope.product.sellprice;
+                var pourcent = price * tva / 100;
+                var total = price + pourcent;
+
+                angular.element('#sellpriceTTC').val(total);
+            }
+        });
+    };
+
 
     $scope.add_new = function (product) {
         product.image = $scope.uploadimage;
         ProductsFactory.addProduct(product).then(function (data) {
                 displayMessage("Produit enregistré.", "success");
-                $scope.product = '';
-                $scope.addProductForm.$setPristine();
-                $scope.addProductForm.$setUntouched();
+                $route.reload();
             },
             function (msg) {
                 displayMessage(msg, "error");
