@@ -1,3 +1,16 @@
-<div class="container">
+<div class="container" ng-controller="ClientsController">
     <h1>Liste des clients</h1>
+    <div class="col-xs-12 col-lg-12 col-md-12">
+        <a class="client-link" ng-href="#/client/{{client.fields['client_uuid']}}" ng-repeat="client in clients track by $index">
+            <div class="col-xs-2 col-lg-2 col-md-2 clients">
+                <div class="textable">
+                    <h1>{{client.fields['client_firstname']}} {{client.fields['client_lastname']}}</h1>
+                    <ul>
+                        <li>Téléphone: {{client.fields['client_phone']}}</li>
+                        <li>E-mail: {{client.fields['client_email']}}</li>
+                    </ul>
+                </div>
+            </div>
+        </a>
+    </div>
 </div>

@@ -54,9 +54,6 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
     return factory;
 }]);
 
-
-
-
 app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'ProductsFactory', 'LoadingState', 'fileReader', '$route', function ($scope, $rootScope, superCache, ProductsFactory, LoadingState, fileReader, $route) {
     var cache = superCache.get('products');
 
@@ -149,7 +146,7 @@ app.directive("fileread", [function () {
     }
 }]);
 
-app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'ProductsFactory', 'LoadingState', 'fileReader', '$routeParams', function ($scope, $rootScope, superCache, ProductsFactory, LoadingState, fileReader, $routeParams) {
+app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'ProductsFactory', 'LoadingState', '$routeParams', function ($scope, $rootScope, superCache, ProductsFactory, LoadingState, $routeParams) {
     var cache = superCache.get('product');
 
     if (cache) {

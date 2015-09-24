@@ -18,35 +18,39 @@
   width: 100%;
 }
 
-.product-link{
+.product-link, .client-link{
   color:@text_color;
   &:hover{
     color:@text_color_hover;
   }
 }
 
-.products {
+.products, .clients {
   border: solid black 1px;
-  margin: 0 5px 0 5px;
+  margin: 5px;
   height: 200px;
   z-index: 1;
   position: relative;
   padding: 0;
+  overflow: hidden;
 
   .textable{
     z-index: 3;
     position: absolute;
     top: 0;
     .fullsized;
+    text-align: center;
 
     h1{
       margin: 0;
-      text-align: center;
       position: relative;
       width: 100%;
     }
 
     ul{
+      position: relative;
+      width: 100%;
+      padding: 0;
       li{
         list-style: none;
         &:before{
