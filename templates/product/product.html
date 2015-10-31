@@ -3,7 +3,14 @@
         <h1>{{product['prod_name']}}</h1>
         <img src="{{product['prod_image']}}"/>
         <div>
-            <span>TVA: {{product['prod_tva_value']}}</span>
+            <span>TVA: {{product['prod_tva_value']}}</span><br>
+            <span>Prix de vente: {{product['prod_sellprice']}}</span><br>
+            <span>buyprice: {{product['prod_buyprice']}}</span><br>
+            <span>datebuy: {{product['prod_datebuy']}}</span><br>
+            <span>stock: {{product['prod_stock']}}</span><br>
+
+            <span>lastmodif: {{product['prod_lastmodification']}}</span><br>
+            <span>par: {{product['prod_user']}}</span>
         </div>
     </div>
 </div>

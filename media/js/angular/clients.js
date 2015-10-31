@@ -1,5 +1,5 @@
 app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
-    var factory = {
+    return {
         clients: false,
         getClients: function () {
             var deferred = $q.defer();
@@ -8,7 +8,7 @@ app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
                     deferred.resolve(angular.fromJson(data));
                 })
                 .error(function (data) {
-                    deferred.reject(null);
+                    deferred.reject(data);
                 });
             return deferred.promise;
         },
@@ -19,7 +19,7 @@ app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
                     deferred.resolve(angular.fromJson(data));
                 })
                 .error(function (data) {
-                    deferred.reject(null);
+                    deferred.reject(data);
                 });
             return deferred.promise;
         },
@@ -35,12 +35,11 @@ app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
                     deferred.resolve(data);
                 })
                 .error(function (data) {
-                    deferred.reject(null);
+                    deferred.reject(data);
                 });
             return deferred.promise;
-        },
-    }
-    return factory;
+        }
+    };
 }]);
 
 
@@ -65,9 +64,17 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
         });
     }
 
+    $scope.$on('ngRepeatFinished', function() {
+        $('#table_clients').DataTable({
+            "language" :{
+                "url": "media/french.json"
+            }
+        });
+    });
+
     $scope.add_new = function (client) {
         console.log(client);
-        ClientsFactory.addClient(client).then(function (data) {
+        ClientsFactory.addClient(client).then(function () {
                 displayMessage("Client enregistré.", "success");
                 $route.reload();
             },
@@ -79,7 +86,8 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
     };
 }]);
 
-app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'ClientsFactory', 'LoadingState', '$routeParams', function ($scope, $rootScope, superCache, ClientsFactory, LoadingState, $routeParams) {
+app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'ClientsFactory', 'LoadingState', '$routeParams', '$location',
+    function ($scope, $rootScope, superCache, ClientsFactory, LoadingState, $routeParams, $location) {
     var cache = superCache.get('client');
 
     if (cache) {
@@ -91,6 +99,8 @@ app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'Clien
         ClientsFactory.getClient($routeParams.uuid).then(function (data) {
             $scope.client = data[0].fields;
 
+            $scope.client['client_lastmodification'] = date_format($scope.client['client_lastmodification']);
+
             LoadingState.setLoadingState(false);
             $scope.loading = LoadingState.getLoadingState();
         }, function (msg) {
@@ -99,5 +109,16 @@ app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'Clien
             displayMessage(msg, "error");
         });
     }
+
+    function date_format(date){
+        var datesplit = date.split("T");
+        return datesplit[0];
+    }
+
+    $scope.modification = function(){
+        clientbob = $scope.client;
+        $location.path("client/new/");
+        //$scope.$apply();
+    };
 }]);
 

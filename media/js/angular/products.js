@@ -1,5 +1,5 @@
 app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
-    var factory = {
+    return {
         products: false,
         getProducts: function () {
             var deferred = $q.defer();
@@ -8,7 +8,7 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
                     deferred.resolve(angular.fromJson(data));
                 })
                 .error(function (data) {
-                    deferred.reject(null);
+                    deferred.reject(data);
                 });
             return deferred.promise;
         },
@@ -19,7 +19,7 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
                     deferred.resolve(angular.fromJson(data));
                 })
                 .error(function (data) {
-                    deferred.reject(null);
+                    deferred.reject(data);
                 });
             return deferred.promise;
         },
@@ -35,7 +35,7 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
                     deferred.resolve(data);
                 })
                 .error(function (data) {
-                    deferred.reject(null);
+                    deferred.reject(data);
                 });
             return deferred.promise;
         },
@@ -46,15 +46,28 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
                     deferred.resolve(angular.fromJson(data));
                 })
                 .error(function (data) {
-                    deferred.reject(null);
+                    deferred.reject(data);
                 });
             return deferred.promise;
         }
-    }
-    return factory;
+    };
 }]);
 
-app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'ProductsFactory', 'LoadingState', 'fileReader', '$route', function ($scope, $rootScope, superCache, ProductsFactory, LoadingState, fileReader, $route) {
+app.directive('onFinishRender', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope) {
+                if (scope.$last === true) {
+                    $timeout(function () {
+                        scope.$emit('ngRepeatFinished');
+                    });
+                }
+            }
+        }
+    });
+
+app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'ProductsFactory', 'LoadingState', 'fileReader', '$route', '$location',
+    function ($scope, $rootScope, superCache, ProductsFactory, LoadingState, fileReader, $route, $location) {
     var cache = superCache.get('products');
 
     if (cache) {
@@ -74,6 +87,25 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
             displayMessage(msg, "error");
         });
     }
+
+    $scope.$on('ngRepeatFinished', function() {
+        $('#table_products').DataTable({
+            "language" :{
+                "url": "media/french.json"
+            },
+            "columns": [
+                null,
+                null,
+                {"orderable": false},
+                {"orderable": false},
+                {"orderable": false}
+            ]
+        });
+    });
+
+    $scope.show_product = function(id){
+      $location.path("/product/"+id);
+    };
 
     $scope.loadTVA = function(){
         ProductsFactory.getTVA().then(function(data){
@@ -97,7 +129,7 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
 
     $scope.add_new = function (product) {
         product.image = $scope.uploadimage;
-        ProductsFactory.addProduct(product).then(function (data) {
+        ProductsFactory.addProduct(product).then(function () {
                 displayMessage("Produit enregistré.", "success");
                 $route.reload();
             },
@@ -116,37 +148,10 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
     };
 }]);
 
-app.directive("ngFileSelect", function () {
-    return {
-        link: function (scope, el) {
-            el.bind("change", function (e) {
-                scope.file = (e.srcElement || e.target).files[0];
-                scope.getFile();
-            })
-        }
-    }
-});
 
-app.directive("fileread", [function () {
-    return {
-        scope: {
-            fileread: "="
-        },
-        link: function (scope, element, attributes) {
-            element.bind("change", function (changeEvent) {
-                var reader = new FileReader();
-                reader.onload = function (loadEvent) {
-                    scope.$apply(function () {
-                        scope.fileread = loadEvent.target.result;
-                    });
-                }
-                reader.readAsDataURL(changeEvent.target.files[0]);
-            });
-        }
-    }
-}]);
+app.controller('ProductController', ['$scope', 'superCache', 'ProductsFactory', 'LoadingState', '$routeParams',
+    function ($scope, superCache, ProductsFactory, LoadingState, $routeParams) {
 
-app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'ProductsFactory', 'LoadingState', '$routeParams', function ($scope, $rootScope, superCache, ProductsFactory, LoadingState, $routeParams) {
     var cache = superCache.get('product');
 
     if (cache) {

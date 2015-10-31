@@ -1,8 +1,31 @@
 <div class="container" ng-controller="ClientController">
     <div class="col-xs-12 col-lg-12 col-md-12 product">
         <h1>{{client['client_firstname']}} {{client['client_lastname']}}</h1>
-        <div>
-            <span>Téléphone: {{client['client_phone']}}</span>
+        <div class="infos">
+            <div class="infos-container">
+                <div>Téléphone:</div>
+                <div>{{client['client_phone']}}</div>
+            </div>
+
+            <div class="infos-container">
+                Adresse: {{client['client_address']}}
+            </div>
+
+            <div class="infos-container">
+                Ville: {{client['client_town']}}
+            </div>
+
+            <div class="infos-container">
+                P: {{client['client_zipcode']}}
+            </div>
+
+            <div class="infos-container">
+                Email: {{client['client_email']}}
+            </div>
+
+            <div>Dernière modification: {{client['client_lastmodification']}}</div>
+            <div>Par: {{client['client_user']}}</div>
         </div>
+        <button class="btn btn-default" id="modif-button" ng-click="modification(client)">Modifier</button>
     </div>
 </div>
