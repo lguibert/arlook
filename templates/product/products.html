@@ -4,23 +4,39 @@
     <div class="col-xs-12 col-lg-12 col-md-12" ng-if="products">
         <table id="table_products" class="table">
             <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Stock</th>
-                    <th>Image</th>
-                    <th>Entrée</th>
-                    <th>Sortie</th>
-                </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Stock</th>
+                <th>Image</th>
+                <th>Entrée</th>
+                <th>Sortie</th>
+            </tr>
             </thead>
             <tbody>
-                <tr class="product-link" ng-click="show_product(product.fields['prod_uuid'])"
-                    ng-repeat="product in products track by $index" on-finish-render="ngRepeatFinished">
-                    <td>{{product.fields['prod_name']}}</td>
-                    <td>{{product.fields['prod_stock']}}</td>
-                    <td class="tiny"><img src="{{product.fields['prod_image']}}"/></td>
-                    <td><button>Entrée</button></td>
-                    <td><button>Sortie</button></td>
-                </tr>
+            <tr class="product-link" ng-repeat="product in products track by $index"
+                on-finish-render="ngRepeatFinished">
+                <td>{{product.fields['prod_name']}}</td>
+                <td>{{product.fields['prod_stock']}}</td>
+                <td class="tiny"><img src="{{product.fields['prod_image']}}"/></td>
+                <td>
+                    <form novalidate>
+                        <div class="form-group">
+                            <input required class="form-control" placeholder="Quantité en entrée" type="number" min="0" step="1" name="qt_in" ng-model="qt_in"/>
+                            <input type="submit" class="btn btn-default"
+                                   ng-click="in_product(product.fields['prod_uuid'], qt_in, $event)" value="Entrée"/>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <form novalidate>
+                        <div class="form-group">
+                            <input required class="form-control" placeholder="Quantité en sortie" type="number" min="0" step="1" name="qt_out" ng-model="qt_out"/>
+                            <input type="submit" class="btn btn-default"
+                                   ng-click="out_product(product.fields['prod_uuid'], qt_out, $event)" value="Sortie"/>
+                        </div>
+                    </form>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

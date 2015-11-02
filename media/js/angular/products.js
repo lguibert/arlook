@@ -12,17 +12,6 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
                 });
             return deferred.promise;
         },
-        getProduct: function (uuid) {
-            var deferred = $q.defer();
-            $http.get(server + 'product/' + uuid, {cache: true})
-                .success(function (data) {
-                    deferred.resolve(angular.fromJson(data));
-                })
-                .error(function (data) {
-                    deferred.reject(data);
-                });
-            return deferred.promise;
-        },
         addProduct: function (product) {
             var deferred = $q.defer();
             $http({
@@ -44,6 +33,38 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
             $http.get(server + 'tva/', {cache: true})
                 .success(function (data) {
                     deferred.resolve(angular.fromJson(data));
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
+        },
+        inProduct: function(nb){
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: server + 'product/in/',
+                data: nb,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function (data) {
+                    deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
+        },
+        outProduct: function(nb){
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: server + 'product/out/',
+                data: nb,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function (data) {
+                    deferred.resolve(data);
                 })
                 .error(function (data) {
                     deferred.reject(data);
@@ -73,6 +94,10 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
     if (cache) {
         $scope.products = cache;
     } else {
+        getProduct();
+    }
+
+    function getProduct(){
         LoadingState.setLoadingState(true);
         $scope.loading = LoadingState.getLoadingState();
 
@@ -87,6 +112,7 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
             displayMessage(msg, "error");
         });
     }
+
 
     $scope.$on('ngRepeatFinished', function() {
         $('#table_products').DataTable({
@@ -112,6 +138,54 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
             $scope.tva = data;
         });
     };
+
+    $scope.in_product = function(uuid, nb, $event){
+        LoadingState.setLoadingState(true);
+        $scope.loading = LoadingState.getLoadingState();
+
+        ProductsFactory.inProduct([uuid, nb]).then(function () {
+            LoadingState.setLoadingState(false);
+            $scope.loading = LoadingState.getLoadingState();
+            displayMessage("Modification effectuée.", "success");
+            updateProduct(uuid, nb, "+", $event);
+        }, function (msg) {
+            LoadingState.setLoadingState(false);
+            $scope.loading = LoadingState.getLoadingState();
+            displayMessage(msg, "error");
+        });
+    };
+
+    $scope.out_product = function(uuid, nb, $event){
+        LoadingState.setLoadingState(true);
+        $scope.loading = LoadingState.getLoadingState();
+
+        ProductsFactory.outProduct([uuid, nb]).then(function () {
+            LoadingState.setLoadingState(false);
+            $scope.loading = LoadingState.getLoadingState();
+            displayMessage("Modification effectuée.", "success");
+            updateProduct(uuid, nb, "-", $event);
+        }, function (msg) {
+            LoadingState.setLoadingState(false);
+            $scope.loading = LoadingState.getLoadingState();
+            displayMessage(msg, "error");
+        });
+    };
+
+    function updateProduct(uuid, nb, ope, $event){
+        for(var i = 0; i < $scope.products.length; i++){
+            if($scope.products[i].fields['prod_uuid'] == uuid){
+                if(ope == "+"){
+                    $scope.products[i].fields['prod_stock'] += nb ;
+                    break;
+                }
+                else if(ope == "-"){
+                    $scope.products[i].fields['prod_stock'] -= nb ;
+                    break;
+                }
+            }
+        }
+        $event.currentTarget.parentElement.children[0].value = "";
+    }
 
     $scope.sellpriceTTC = function(){
         $scope.$watch(['sellprice', 'tva'], function(){
@@ -146,29 +220,4 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
                 $scope.imageSrc = result;
             });
     };
-}]);
-
-
-app.controller('ProductController', ['$scope', 'superCache', 'ProductsFactory', 'LoadingState', '$routeParams',
-    function ($scope, superCache, ProductsFactory, LoadingState, $routeParams) {
-
-    var cache = superCache.get('product');
-
-    if (cache) {
-        $scope.product = cache;
-    } else {
-        LoadingState.setLoadingState(true);
-        $scope.loading = LoadingState.getLoadingState();
-
-        ProductsFactory.getProduct($routeParams.uuid).then(function (data) {
-            $scope.product = data;
-
-            LoadingState.setLoadingState(false);
-            $scope.loading = LoadingState.getLoadingState();
-        }, function (msg) {
-            LoadingState.setLoadingState(false);
-            $scope.loading = LoadingState.getLoadingState();
-            displayMessage(msg, "error");
-        });
-    }
 }]);

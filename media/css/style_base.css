@@ -1,4 +1,5 @@
 .message {
+    z-index: 9999;
     padding: 15px;
     text-align: center;
     position: fixed;
@@ -41,6 +42,7 @@ footer {
 
 .loading {
     position: absolute;
+    z-index: 9999;
     top: 0;
     left: 0;
     height: 100%;
@@ -48,6 +50,7 @@ footer {
 }
 
 .loading div {
+    background-color: white;
     position: absolute;
     top: 42%;
     left: 42%;

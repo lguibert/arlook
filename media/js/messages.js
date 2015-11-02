@@ -11,7 +11,7 @@ function displayMessage(message, type){
     setTimeout(function(){
         act.removeClass("bounceIn").addClass("bounceOut").delay(700).hide(0);
         refactorMessageContainer(act);
-    },5000);
+    },2000);
 }
 
 function refactorMessageContainer(target){

@@ -110,21 +110,6 @@
   max-width: @max_size;
 }
 
-table{
-  tr{
-    //color:white;
-    &:hover{
-      cursor: pointer;
-    }
-    &.darker{
-      //background-color: rgba(77, 77, 77, 0.6) !important;
-    }
-    &.lighter{
-      //background-color: rgba(188, 188, 188, 0.45) !important;
-    }
-  }
-}
-
 .table{
   .odd{
     background-color: #f9f9f9;
@@ -136,6 +121,17 @@ table{
     background-color: #ffffff;
     &:hover{
       background-color: rgba(36, 235, 43, 0.07);
+    }
+  }
+  form{
+    input[type='number']{
+      width: 160px;
+      margin: auto auto 3px auto;
+      display: block;
+    }
+    input[type='submit']{
+      margin: auto;
+      display: block;
     }
   }
 }

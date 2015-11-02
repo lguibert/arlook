@@ -3,7 +3,6 @@ app.config(['$routeProvider', function ($routeProvider) {
         .when("/login", {templateUrl: 'templates/login.html'})
         .when('/products/', {templateUrl: 'templates/product/products.html'})
         .when('/product/new/', {templateUrl: 'templates/product/add_product.html'})
-        .when('/product/:uuid/', {templateUrl: 'templates/product/product.html'})
 
         .when('/clients/', {templateUrl: 'templates/client/clients.html'})
         .when('/client/new/', {templateUrl: 'templates/client/add_client.html'})
@@ -40,8 +39,6 @@ app.run(['$rootScope', '$location', '$cookieStore', '$http', function ($rootScop
 
                 if(right === -1){
                     $location.path('/myaccount');
-                }else{
-                    console.log("tu passe coco");
                 }
             }
         }
