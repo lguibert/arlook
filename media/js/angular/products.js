@@ -94,10 +94,6 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
     if (cache) {
         $scope.products = cache;
     } else {
-        getProduct();
-    }
-
-    function getProduct(){
         LoadingState.setLoadingState(true);
         $scope.loading = LoadingState.getLoadingState();
 

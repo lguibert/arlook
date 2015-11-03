@@ -21,6 +21,6 @@ app.controller('LoginController', function ($scope, $rootScope, AuthenticationSe
 
     $scope.logout = function (){
         AuthenticationService.ClearCredentials();
-        $location.path("/");
+        $location.path("/login");
     }
 });

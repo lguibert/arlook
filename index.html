@@ -23,15 +23,23 @@
 <header>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container" ng-controller="LoginController">
-            <div id="navbar" class="navbar-collapse collapse" ng-if="logged">
-                <div class="navbar_header">
-                    <a href="#/products/" class="navbar-brand">Tous les produits</a>
-                    <a href="#/product/new" class="navbar-brand">Ajouter un produit</a>
-                    <a href="#/clients/" class="navbar-brand">Tous les clients</a>
-                    <a href="#/client/new" class="navbar-brand">Ajouter un client</a>
-                    <a href="#/myaccount/" class="navbar-brand">Mon compte</a>
-                    <a href="#/bilan/" ng-if="role == 'admin'" class="navbar-brand">Bilan</a>
-                </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Ouvrir la navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse" ng-if="logged">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/products/" class="navbar-brand">Tous les produits</a></li>
+                    <li><a href="#/product/new" class="navbar-brand">Ajouter un produit</a></li>
+                    <li><a href="#/clients/" class="navbar-brand">Tous les clients</a></li>
+                    <li><a href="#/client/new" class="navbar-brand">Ajouter un client</a></li>
+                    <li><a href="#/myaccount/" class="navbar-brand">Mon compte</a></li>
+                    <li><a href="#/bilan/" ng-if="role == 'admin'" class="navbar-brand">Bilan</a></li>
+                </ul>
                 <div class="navbar-form navbar-right">
                     <a href="#" class="form-control" ng-click="logout()">Déconnexion</a>
                 </div>
@@ -57,6 +65,7 @@
 <script src="media/js/angular/routes.js"></script>
 <script src="media/js/angular/upload.js"></script>
 <script src="media/js/angular/products.js"></script>
+<script src="media/js/angular/product.js"></script>
 <script src="media/js/angular/clients.js"></script>
 <script src="media/js/angular/tools.js"></script>
 <script src="media/js/angular/users.js"></script>

@@ -4,6 +4,7 @@
 @color_error: #DA300E;
 @text_color: #424242;
 @text_color_hover: #1A237E;
+@back_transparent: rgba(255,255,255,0.5);
 
 @max_size: 200px;
 
@@ -122,16 +123,47 @@
     &:hover{
       background-color: rgba(36, 235, 43, 0.07);
     }
+    tr td .padding-different{
+      padding-bottom:0 !important;
+    }
   }
   form{
+    div{
+      margin-bottom: 0;
+      margin-top: 10px;
+    }
     input[type='number']{
-      width: 160px;
-      margin: auto auto 3px auto;
+      width: 100px;
+      //margin: auto auto 3px auto;
+      display: inline-block;
+      vertical-align: top;
+    }
+    input[type='image']{
+      //margin: auto;
+      display: inline-block;
+      vertical-align: top;
+      &:active{
+        background-color: lightgrey;
+      }
+    }
+  }
+}
+
+#login{
+  position: absolute;
+  left:35%;
+  overflow: hidden;
+  width: 480px;
+  background-color: @back_transparent;
+  padding-bottom: 20px;
+  form{
+    .fullsized;
+    button{
+      margin: 20px auto auto auto;
       display: block;
     }
-    input[type='submit']{
-      margin: auto;
-      display: block;
+    label{
+      margin-top: 20px;
     }
   }
 }

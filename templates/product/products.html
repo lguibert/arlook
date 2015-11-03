@@ -8,31 +8,31 @@
                 <th>Nom</th>
                 <th>Stock</th>
                 <th>Image</th>
-                <th>Entrée</th>
-                <th>Sortie</th>
+                <th>Quantité en entrée</th>
+                <th>Quantité en sortie</th>
             </tr>
             </thead>
             <tbody>
             <tr class="product-link" ng-repeat="product in products track by $index"
                 on-finish-render="ngRepeatFinished">
-                <td>{{product.fields['prod_name']}}</td>
+                <td><a ng-href="#/product/{{product.fields['prod_uuid']}}"> {{product.fields['prod_name']}}</a></td>
                 <td>{{product.fields['prod_stock']}}</td>
                 <td class="tiny"><img src="{{product.fields['prod_image']}}"/></td>
-                <td>
+                <td class="padding-different">
                     <form novalidate>
                         <div class="form-group">
-                            <input required class="form-control" placeholder="Quantité en entrée" type="number" min="0" step="1" name="qt_in" ng-model="qt_in"/>
-                            <input type="submit" class="btn btn-default"
-                                   ng-click="in_product(product.fields['prod_uuid'], qt_in, $event)" value="Entrée"/>
+                            <input required class="form-control" type="number" min="0" step="1" name="qt_in" ng-model="qt_in"/>
+                            <input type="image" src="media/img/ok.png"
+                                   ng-click="in_product(product.fields['prod_uuid'], qt_in, $event)"/>
                         </div>
                     </form>
                 </td>
-                <td>
+                <td class="padding-different">
                     <form novalidate>
                         <div class="form-group">
-                            <input required class="form-control" placeholder="Quantité en sortie" type="number" min="0" step="1" name="qt_out" ng-model="qt_out"/>
-                            <input type="submit" class="btn btn-default"
-                                   ng-click="out_product(product.fields['prod_uuid'], qt_out, $event)" value="Sortie"/>
+                            <input required class="form-control" type="number" min="0" step="1" name="qt_out" ng-model="qt_out"/>
+                            <input type="image" src="media/img/ok.png"
+                                   ng-click="out_product(product.fields['prod_uuid'], qt_out, $event)"/>
                         </div>
                     </form>
                 </td>
