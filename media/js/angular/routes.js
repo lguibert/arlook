@@ -3,6 +3,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         .when("/login", {templateUrl: 'templates/login.html'})
         .when('/products/', {templateUrl: 'templates/product/products.html'})
         .when('/product/new/', {templateUrl: 'templates/product/add_product.html'})
+        .when('/product/update/:uuid', {templateUrl: 'templates/product/update_product.html'})
         .when('/product/:uuid/', {templateUrl: 'templates/product/product.html'})
 
         .when('/clients/', {templateUrl: 'templates/client/clients.html'})
@@ -23,6 +24,7 @@ app.run(['$rootScope', '$location', '$cookieStore', '$http', function ($rootScop
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
             $rootScope.logged = true;
+            $rootScope.role = $rootScope.globals.currentUser.role;
         }
 
         var restrictedPage = $.inArray($location.path(), ['/login']) === -1;

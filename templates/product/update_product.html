@@ -1,10 +1,10 @@
-<div class="container" ng-controller="ProductsController" ng-init="loadTVA()">
+<div class="container" ng-controller="ProductController" ng-init="loadTVA()">
     <form role="form" enctype="multipart/form-data" name="addProductForm" novalidate class="simple-form"
           ng-submit="addProductForm.$valid">
 
         <div class="form-group">
             <label for="name">Nom <span class="indice-info">*</span> </label>
-            <input class="form-control" id="name" name="name" type="text" ng-model="product.name" required/>
+            <input class="form-control" id="name" name="name" type="text" ng-model="product.prod_name" required/>
 
             <div ng-show="addProductForm.$submitted || addProductForm.name.$touched">
                 <div class="error" ng-show="addProductForm.name.$error.required">Le nom de produit est obligatoire.
@@ -14,9 +14,9 @@
 
         <div class="form-group">
             <label for="tva">TVA <span class="indice-info">*</span> </label>
-            <select ng-model="product.tva" class="form-control" name="tva" id="tva" required ng-change="sellpriceTTC()">
+            <select class="form-control" ng-model="product.prod_tva" name="tva" id="tva" required ng-change="sellpriceTTC()">
                 <option></option>
-                <option ng-repeat="t in tva track by $index" value="{{t.fields['tva_uuid']}}">
+                <option ng-repeat="t in tva track by $index" value="{{t.fields['tva_uuid']}}" >
                     {{t.fields['tva_value']}} %
                 </option>
             </select>
@@ -28,13 +28,13 @@
 
         <div class="form-group">
             <label for="sellprice">Prix de vente HT (en €) <span class="indice-info">*</span> </label>
-            <input class="form-control" id="sellprice" name="sellprice" type="number" step="0.01" min="0"
-                   ng-model="product.sellprice"
+            <input class="form-control" string-to-number id="sellprice" name="sellprice" type="number" step="0.01" min="0"
+                   ng-model="product.prod_sellprice"
                    ng-change="sellpriceTTC()"
                    required/>
 
             <div class="form-group-small">
-                <label for="sellpriceTTC">Prix de vente TTC (en €): </label>
+                <label for="sellpriceTTC">Prix de vente TTC (en €) </label>
                 <input type="text" disabled id="sellpriceTTC">
             </div>
 
@@ -45,8 +45,8 @@
 
         <div class="form-group">
             <label for="buyprice">Prix d'achat HT (en €) <span class="indice-info">*</span> </label>
-            <input class="form-control" id="buyprice" name="buyprice" type="number" step="0.01" min="0"
-                   ng-model="product.buyprice"
+            <input class="form-control" string-to-number id="buyprice" name="buyprice" type="number" step="0.01" min="0"
+                   ng-model="product.prod_buyprice"
                    required/>
 
             <div ng-show="addProductForm.$submitted || addProductForm.buyprice.$touched">
@@ -57,7 +57,7 @@
 
         <div class="form-group">
             <label for="datebuy">Date d'achat <span class="indice-info">*</span> </label>
-            <input class="form-control" id="datebuy" name="datebuy" type="date" ng-model="product.datebuy"
+            <input class="form-control" string-to-date id="datebuy" name="datebuy" type="date" ng-model="product.prod_datebuy"
                    required/>
 
             <div ng-show="addProductForm.$submitted || addProductForm.datebuy.$touched">
@@ -66,8 +66,8 @@
         </div>
 
         <div class="form-group">
-            <label for="stock">Stock <span class="indice-info">*</span> </label>
-            <input class="form-control" id="stock" name="stock" type="number" step="1" min="0" ng-model="product.stock"
+            <label for="stock">Stock <span class="indice-info"><span class="indice-info">*</span></span> </label>
+            <input class="form-control" string-to-number id="stock" name="stock" type="number" step="1" min="0" ng-model="product.prod_stock"
                    required/>
 
             <div ng-show="addProductForm.$submitted || addProductForm.stock.$touched">
@@ -78,7 +78,7 @@
         <div class="form-group">
             <label for="image">Image: </label>
             <input class="form-control" id="image" fileread="uploadimage" ng-file-select="onFileSelect($files)"
-                   name="image" type="file" ng-model="product.image"/>
+                   name="image" type="file" ng-model="product.prod_image"/>
             <img id="mignature" ng-src="{{imageSrc}}"/>
 
             <div ng-show="addProductForm.$submitted || addProductForm.image.$touched"></div>
@@ -87,11 +87,11 @@
         <input disabled type="hidden" ng-model="product.uuid"/>
 
         <div class="infos">
-            <p><span class="indice-info">*</span> : Informations obligatoires</p>
+            <p><span class="indice-info"><span class="indice-info">*</span></span> : Informations obligatoires</p>
         </div>
 
 
-        <input class="btn btn-default" type="submit" ng-click="add_new(product)" ng-disabled="addProductForm.$invalid"
+        <input class="btn btn-default" type="submit" ng-click="update(product)" ng-disabled="addProductForm.$invalid"
                ng-class="{true: 'disabled'}[addProductForm.$invalid]"
                value="Enregistrer"/>
     </form>

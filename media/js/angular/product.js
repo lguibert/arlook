@@ -27,29 +27,50 @@ app.factory('ProductFactory', ['$http', '$q', function ($http, $q) {
                     deferred.reject(data);
                 });
             return deferred.promise;
+        },
+        getTVA: function(){
+            var deferred = $q.defer();
+            $http.get(server + 'tva/', {cache: true})
+                .success(function (data) {
+                    deferred.resolve(angular.fromJson(data));
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
         }
     };
 }]);
 
-app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'ProductFactory', 'LoadingState', 'fileReader', '$routeParams',
-    function ($scope, $rootScope, superCache, ProductFactory, LoadingState, fileReader, $routeParams) {
-    var cache = superCache.get('product');
+app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'ProductFactory', 'LoadingState', 'fileReader', '$routeParams', '$location',
+    function ($scope, $rootScope, superCache, ProductFactory, LoadingState, fileReader, $routeParams, $location) {
+        var cache = superCache.get('product');
 
-    if (cache) {
-        $scope.product = cache;
-    } else {
-        LoadingState.setLoadingState(true);
-        $scope.loading = LoadingState.getLoadingState();
-
-        ProductFactory.getProduct($routeParams.uuid).then(function (data) {
-            $scope.product = data;
-
-            LoadingState.setLoadingState(false);
+        if (cache) {
+            $scope.product = cache;
+        } else {
+            LoadingState.setLoadingState(true);
             $scope.loading = LoadingState.getLoadingState();
-        }, function (msg) {
-            LoadingState.setLoadingState(false);
-            $scope.loading = LoadingState.getLoadingState();
-            displayMessage(msg, "error");
-        });
-    }
-}]);
+
+            ProductFactory.getProduct($routeParams.uuid).then(function (data) {
+                $scope.product = data;
+
+                LoadingState.setLoadingState(false);
+                $scope.loading = LoadingState.getLoadingState();
+            }, function (msg) {
+                LoadingState.setLoadingState(false);
+                $scope.loading = LoadingState.getLoadingState();
+                displayMessage(msg, "error");
+            });
+        }
+
+        $scope.loadTVA = function(){
+            ProductFactory.getTVA().then(function(data){
+                $scope.tva = data;
+            });
+        };
+
+        $scope.update_product = function (product) {
+            $location.path("/product/update/" + product.prod_uuid);
+        }
+    }]);
