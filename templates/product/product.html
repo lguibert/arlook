@@ -4,18 +4,45 @@
         <img src="{{product.prod_image}}"/>
 
         <div>
-            <span>TVA: {{product.prod_tva_value}}</span><br>
-            <span>Prix de vente: {{product.prod_sellprice}}</span><br>
-            <span>buyprice: {{product.prod_buyprice}}</span><br>
-            <span>datebuy: {{product.prod_datebuy}}</span><br>
-            <span>stock: {{product.prod_stock}}</span><br>
+            <span>TVA: {{product.prod_tva_value}} %</span><br>
+            <span>Prix de vente: {{product.prod_sellprice}} €</span><br>
+            <span>Prix d'achat: {{product.prod_buyprice}} €</span><br>
+            <span>Date d'achat: {{product.prod_datebuy | date:'dd/MM/yyyy'}}</span><br>
 
-            <span>Dernière modification: {{product.prod_lastmodification}}</span><br>
-            <span>par: {{product.prod_user}}</span>
+            <span>Stock vente: {{product.prod_stock}}</span><br>
+            <span>Stock magasin: {{product.prod_stock_store}}</span><br>
+
+            <span>Dernière modification: {{product.prod_lastmodification | date:'dd/MM/yyyy à HH:mm:ss'}}</span><br>
         </div>
 
         <div>
-            <button ng-click="update_product(product)" class="btn btn-default">Modifier le produit</button>
+            <a ng-href="#/product/update/{{product.prod_uuid}}"  class="btn btn-default">Modifier le produit</a>
         </div>
+    </div>
+
+
+
+    <div ng-if="role=='admin'" ng-controller="LineProdController">
+        <h1>Activité sur le produit</h1>
+        <div >
+            {{line}}
+        </div>
+        <table id="table_lineprod" class="table">
+            <thead>
+            <tr>
+                <th>Action</th>
+                <th>Utilisateur</th>
+                <th>Date et heure</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="product-link" ng-repeat="line in lineprod track by $index"
+                on-finish-render="ngRepeatFinished">
+                <td>{{line[0]}}</td>
+                <td>{{line[1]}}</td>
+                <td>{{line[2]}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

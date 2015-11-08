@@ -118,6 +118,7 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
             "columns": [
                 null,
                 null,
+                null,
                 {"orderable": false},
                 {"orderable": false},
                 {"orderable": false}

@@ -1,4 +1,3 @@
-(function (module) {
 
     var fileReader = function ($q, $log) {
 
@@ -50,7 +49,5 @@
         };
     };
 
-    module.factory("fileReader",
+    app.factory("fileReader",
         ["$q", "$log", fileReader]);
-
-}(angular.module("arlook")));

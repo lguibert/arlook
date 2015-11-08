@@ -3,7 +3,7 @@ app.factory('ProductFactory', ['$http', '$q', function ($http, $q) {
         products: false,
         getProduct: function (uuid) {
             var deferred = $q.defer();
-            $http.get(server + 'product/' + uuid, {cache: true})
+            $http.get(server + 'product/' + uuid)
                 .success(function (data) {
                     deferred.resolve(angular.fromJson(data));
                 })
@@ -21,14 +21,14 @@ app.factory('ProductFactory', ['$http', '$q', function ($http, $q) {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             })
                 .success(function (data) {
-                    deferred.resolve(data);
+                    deferred.resolve(angular.fromJson(data));
                 })
                 .error(function (data) {
                     deferred.reject(data);
                 });
             return deferred.promise;
         },
-        getTVA: function(){
+        getTVA: function () {
             var deferred = $q.defer();
             $http.get(server + 'tva/', {cache: true})
                 .success(function (data) {
@@ -42,18 +42,21 @@ app.factory('ProductFactory', ['$http', '$q', function ($http, $q) {
     };
 }]);
 
-app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'ProductFactory', 'LoadingState', 'fileReader', '$routeParams', '$location',
-    function ($scope, $rootScope, superCache, ProductFactory, LoadingState, fileReader, $routeParams, $location) {
+app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'ProductFactory', 'LoadingState', 'fileReader', '$routeParams', '$location', '$route',
+    function ($scope, $rootScope, superCache, ProductFactory, LoadingState, fileReader, $routeParams, $location, $route) {
         var cache = superCache.get('product');
 
-        if (cache) {
+        if (cache ) {
             $scope.product = cache;
-        } else {
+        }
+        else {
             LoadingState.setLoadingState(true);
             $scope.loading = LoadingState.getLoadingState();
 
             ProductFactory.getProduct($routeParams.uuid).then(function (data) {
                 $scope.product = data;
+                $scope.product.prod_datebuy = Date.parse($scope.product.prod_datebuy);
+                $scope.product.prod_lastmodification = Date.parse($scope.product.prod_lastmodification);
 
                 LoadingState.setLoadingState(false);
                 $scope.loading = LoadingState.getLoadingState();
@@ -64,13 +67,56 @@ app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'Prod
             });
         }
 
-        $scope.loadTVA = function(){
-            ProductFactory.getTVA().then(function(data){
+        $scope.sellpriceTTC = function () {
+            $scope.$watch(['sellprice', 'tva'], function () {
+                calculation_tva();
+            });
+        };
+
+        function calculation_tva(){
+            if ($scope.product.prod_tva && $scope.product.prod_sellprice) {
+                var tva = parseInt(angular.element('#tva :selected').html().split("%")[0]);
+                var price = parseFloat($scope.product.prod_sellprice);
+                var pourcent = price * tva / 100;
+                var total = price + pourcent;
+
+                angular.element('#sellpriceTTC').val(total);
+            }
+        }
+
+        $scope.loadTVA = function () {
+            ProductFactory.getTVA().then(function (data) {
                 $scope.tva = data;
             });
         };
 
         $scope.update_product = function (product) {
-            $location.path("/product/update/" + product.prod_uuid);
+            if ($scope.uploadimage) {
+                product.prod_image = $scope.uploadimage;
+            }
+
+            var date = new Date(product.prod_datebuy);
+            product.prod_datebuy = date.getFullYear().toString() + "-" + addZero((date.getMonth() + 1).toString()) + "-" + addZero(date.getDate().toString());
+
+            ProductFactory.updateProduct(product).then(function (data) {
+                $location.path("/product/" + data[0]['fields'].prod_uuid);
+                displayMessage("Mise à jour OP!", "success");
+            }, function (msg) {
+                displayMessage(msg, "error");
+            });
+        };
+
+        function addZero(value) {
+            if (value.length == 1) {
+                value = "0" + value;
+            }
+            return value;
         }
+
+        $scope.getFile = function () {
+            fileReader.readAsDataUrl($scope.file, $scope)
+                .then(function (result) {
+                    $scope.imageSrc = result;
+                });
+        };
     }]);

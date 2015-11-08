@@ -66,12 +66,22 @@
         </div>
 
         <div class="form-group">
-            <label for="stock">Stock <span class="indice-info">*</span> </label>
-            <input class="form-control" id="stock" name="stock" type="number" step="1" min="0" ng-model="product.stock"
+            <label for="stock">Stock vente<span class="indice-info"><span class="indice-info">*</span></span> </label>
+            <input class="form-control" string-to-number id="stock_sell" name="stock_sell" type="number" step="1" min="0" ng-model="product.stock"
+                   required/>
+
+            <div ng-show="addProductForm.$submitted || addProductForm.stock_sell.$touched">
+                <div class="error" ng-show="addProductForm.stock_sell.$error.required">Le stock de vente est obligatoire.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Stock magasin<span class="indice-info"><span class="indice-info">*</span></span> </label>
+            <input class="form-control" string-to-number id="stock" name="stock" type="number" step="1" min="0" ng-model="product.stock_store"
                    required/>
 
             <div ng-show="addProductForm.$submitted || addProductForm.stock.$touched">
-                <div class="error" ng-show="addProductForm.stock.$error.required">Le stock est obligatoire.</div>
+                <div class="error" ng-show="addProductForm.stock.$error.required">Le stock magasin est obligatoire.</div>
             </div>
         </div>
 
