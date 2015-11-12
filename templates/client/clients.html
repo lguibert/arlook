@@ -13,7 +13,7 @@
             <tbody>
             <tr class="product-link" ng-click="show_client(client.fields['client_uuid'])"
                 ng-repeat="client in clients track by $index" on-finish-render="ngRepeatFinished">
-                <td>{{client.fields['client_firstname']}} {{client.fields['client_lastname']}}</td>
+                <td><a ng-href="#/client/{{client.fields['client_uuid']}}"> {{client.fields['client_firstname']}} {{client.fields['client_lastname']}}</a></td>
                 <td>{{client.fields['client_phone']}}</td>
                 <td>{{client.fields['client_email']}}</td>
             </tr>

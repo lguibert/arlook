@@ -38,6 +38,38 @@ app.factory('ProductFactory', ['$http', '$q', function ($http, $q) {
                     deferred.reject(data);
                 });
             return deferred.promise;
+        },
+        inProduct: function(nb){
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: server + 'product/in/store',
+                data: nb,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function (data) {
+                    deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
+        },
+        outProduct: function(nb){
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: server + 'product/out/store',
+                data: nb,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function (data) {
+                    deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
         }
     };
 }]);
@@ -67,6 +99,17 @@ app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'Prod
             });
         }
 
+        $('#table_product_stock_store').DataTable({
+            "language" :{
+                "url": "media/french.json"
+            },
+            "columns": [
+                null,
+                {"orderable": false},
+                {"orderable": false}
+            ]
+        });
+
         $scope.sellpriceTTC = function () {
             $scope.$watch(['sellprice', 'tva'], function () {
                 calculation_tva();
@@ -89,6 +132,49 @@ app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'Prod
                 $scope.tva = data;
             });
         };
+
+        $scope.in_product = function(uuid, nb, $event){
+            LoadingState.setLoadingState(true);
+            $scope.loading = LoadingState.getLoadingState();
+
+            ProductFactory.inProduct([uuid, nb]).then(function () {
+                LoadingState.setLoadingState(false);
+                $scope.loading = LoadingState.getLoadingState();
+                displayMessage("Modification effectuée.", "success");
+                updateStockProduct(nb, "+", $event);
+            }, function (msg) {
+                LoadingState.setLoadingState(false);
+                $scope.loading = LoadingState.getLoadingState();
+                displayMessage(msg, "error");
+            });
+        };
+
+        $scope.out_product = function(uuid, nb, $event){
+            LoadingState.setLoadingState(true);
+            $scope.loading = LoadingState.getLoadingState();
+
+            ProductFactory.outProduct([uuid, nb]).then(function () {
+                LoadingState.setLoadingState(false);
+                $scope.loading = LoadingState.getLoadingState();
+                displayMessage("Modification effectuée.", "success");
+                updateStockProduct(nb, "-", $event);
+            }, function (msg) {
+                LoadingState.setLoadingState(false);
+                $scope.loading = LoadingState.getLoadingState();
+                displayMessage(msg, "error");
+            });
+        };
+
+        function updateStockProduct(nb, ope, $event){
+            if(ope == "+"){
+                $scope.product.prod_stock_store += nb ;
+            }
+            else if(ope == "-"){
+                $scope.product.prod_stock_store -= nb ;
+            }
+
+            $event.currentTarget.parentElement.children[0].value = "";
+        }
 
         $scope.update_product = function (product) {
             if ($scope.uploadimage) {

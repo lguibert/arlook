@@ -1,31 +1,46 @@
 <div class="container" ng-controller="ClientController">
     <div class="col-xs-12 col-lg-12 col-md-12 product">
         <h1>{{client['client_firstname']}} {{client['client_lastname']}}</h1>
-        <div class="infos">
-            <div class="infos-container">
-                <div>Téléphone:</div>
-                <div>{{client['client_phone']}}</div>
-            </div>
 
-            <div class="infos-container">
-                Adresse: {{client['client_address']}}
-            </div>
+        <div id="infos">
+            <ul>
+                <li>Téléphone: {{client['client_phone']}}</li>
+                <li>Adresse: {{client['client_address']}}</li>
+                <li>Ville: {{client['client_town']}}</li>
+                <li>CP: {{client['client_zipcode']}}</li>
 
-            <div class="infos-container">
-                Ville: {{client['client_town']}}
-            </div>
+                <li>Email: {{client['client_email']}}</li>
 
-            <div class="infos-container">
-                P: {{client['client_zipcode']}}
-            </div>
+                <li>Dernière modification: {{client['client_lastmodification'] | date:'dd/MM/yyyy à HH:mm:ss'}}</li>
+            </ul>
 
-            <div class="infos-container">
-                Email: {{client['client_email']}}
+            <div class="controllers-product">
+                <a ng-href="#/client/update/{{client['client_uuid']}}" class="btn btn-primary">Modifier le client</a>
             </div>
-
-            <div>Dernière modification: {{client['client_lastmodification']}}</div>
-            <div>Par: {{client['client_user']}}</div>
         </div>
-        <button class="btn btn-default" id="modif-button" ng-click="modification(client)">Modifier</button>
+    </div>
+
+    <div class="col-xs-12 col-lg-12 col-md-12 ">
+        <div ng-if="role=='admin'" ng-controller="LineClientController">
+            <h1>Activité sur le client</h1>
+
+            <table id="table_lineclient" class="table">
+                <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Utilisateur</th>
+                    <th>Date et heure</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="client-link" ng-repeat="line in lineclient track by $index"
+                    on-finish-render="ngRepeatFinished">
+                    <td>{{line[0]}}</td>
+                    <td>{{line[1]}}</td>
+                    <td>{{line[2]}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

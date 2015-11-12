@@ -14,7 +14,7 @@ app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
         },
         getClient: function (uuid) {
             var deferred = $q.defer();
-            $http.get(server + 'client/' + uuid, {cache: true})
+            $http.get(server + 'client/' + uuid)
                 .success(function (data) {
                     deferred.resolve(angular.fromJson(data));
                 })
@@ -33,6 +33,22 @@ app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
             })
                 .success(function (data) {
                     deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
+        },
+        updateClient: function (client) {
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: server + 'client/update/',
+                data: client,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function (data) {
+                    deferred.resolve(angular.fromJson(data));
                 })
                 .error(function (data) {
                     deferred.reject(data);
@@ -64,9 +80,9 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
         });
     }
 
-    $scope.$on('ngRepeatFinished', function() {
+    $scope.$on('ngRepeatFinished', function () {
         $('#table_clients').DataTable({
-            "language" :{
+            "language": {
                 "url": "media/french.json"
             }
         });
@@ -88,37 +104,33 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
 
 app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'ClientsFactory', 'LoadingState', '$routeParams', '$location',
     function ($scope, $rootScope, superCache, ClientsFactory, LoadingState, $routeParams, $location) {
-    var cache = superCache.get('client');
+        var cache = superCache.get('client');
 
-    if (cache) {
-        $scope.client = cache;
-    } else {
-        LoadingState.setLoadingState(true);
-        $scope.loading = LoadingState.getLoadingState();
-
-        ClientsFactory.getClient($routeParams.uuid).then(function (data) {
-            $scope.client = data[0].fields;
-
-            $scope.client['client_lastmodification'] = date_format($scope.client['client_lastmodification']);
-
-            LoadingState.setLoadingState(false);
+        if (cache) {
+            $scope.client = cache;
+        } else {
+            LoadingState.setLoadingState(true);
             $scope.loading = LoadingState.getLoadingState();
-        }, function (msg) {
-            LoadingState.setLoadingState(false);
-            $scope.loading = LoadingState.getLoadingState();
-            displayMessage(msg, "error");
-        });
-    }
 
-    function date_format(date){
-        var datesplit = date.split("T");
-        return datesplit[0];
-    }
+            ClientsFactory.getClient($routeParams.uuid).then(function (data) {
+                $scope.client = data[0].fields;
 
-    $scope.modification = function(){
-        clientbob = $scope.client;
-        $location.path("client/new/");
-        //$scope.$apply();
-    };
-}]);
+                LoadingState.setLoadingState(false);
+                $scope.loading = LoadingState.getLoadingState();
+            }, function (msg) {
+                LoadingState.setLoadingState(false);
+                $scope.loading = LoadingState.getLoadingState();
+                displayMessage(msg, "error");
+            });
+        }
+
+        $scope.update_client = function (client) {
+            ClientsFactory.updateClient(client).then(function (data) {
+                $location.path("/client/" + data[0]['fields'].client_uuid);
+                displayMessage("Mise à jour effectuée.", "success");
+            }, function (msg) {
+                displayMessage(msg, "error");
+            });
+        };
+    }]);
 

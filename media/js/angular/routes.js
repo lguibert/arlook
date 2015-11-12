@@ -8,12 +8,13 @@ app.config(['$routeProvider', function ($routeProvider) {
 
         .when('/clients/', {templateUrl: 'templates/client/clients.html'})
         .when('/client/new/', {templateUrl: 'templates/client/add_client.html'})
+        .when('/client/update/:uuid', {templateUrl: 'templates/client/update_client.html'})
         .when('/client/:uuid/', {templateUrl: 'templates/client/client.html'})
 
         .when('/myaccount/', {templateUrl: 'templates/account.html'})
 
         .when('/bilan/', {templateUrl: 'templates/bilan.html', data: {role: ['admin']}})
-        .otherwise({redirectTo: '/login'});
+        .otherwise({redirectTo: '/myaccount'});
 }]);
 
 app.run(['$rootScope', '$location', '$cookieStore', '$http', function ($rootScope, $location, $cookieStore, $http) {

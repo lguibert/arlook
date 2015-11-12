@@ -3,32 +3,69 @@
         <h1>{{product.prod_name}}</h1>
         <img src="{{product.prod_image}}"/>
 
-        <ul>
-            <li>TVA: {{product.prod_tva_value}} %</li>
-            <li>Prix de vente: {{product.prod_sellprice}} €</li>
-            <li>Prix d'achat: {{product.prod_buyprice}} €</li>
-            <li>Date d'achat: {{product.prod_datebuy | date:'dd/MM/yyyy'}}</li>
+        <div id="infos">
+            <ul>
+                <li>TVA: {{product.prod_tva_value}} %</li>
+                <li>Prix de vente: {{product.prod_sellprice}} €</li>
+                <li>Prix d'achat: {{product.prod_buyprice}} €</li>
+                <li>Date d'achat: {{product.prod_datebuy | date:'dd/MM/yyyy'}}</li>
 
-            <li>Stock vente: {{product.prod_stock}}</li>
-            <li>Stock magasin: {{product.prod_stock_store}}</li>
+                <li>Stock vente: {{product.prod_stock}}</li>
+                <li>Stock magasin: {{product.prod_stock_store}}</li>
 
-            <li>Stock total: {{product.prod_stock_store + product.prod_stock}}</li>
+                <li>Stock total: {{product.prod_stock_store + product.prod_stock}}</li>
 
-            <li>Dernière modification: {{product.prod_lastmodification | date:'dd/MM/yyyy à HH:mm:ss'}}</li>
-        </ul>
+                <li>Dernière modification: {{product.prod_lastmodification | date:'dd/MM/yyyy à HH:mm:ss'}}</li>
+            </ul>
 
-        <div>
-            <a ng-href="#/product/update/{{product.prod_uuid}}" class="btn btn-primary">Modifier le produit</a>
+            <div class="controllers-product">
+                <a ng-href="#/product/update/{{product.prod_uuid}}" class="btn btn-primary">Modifier le produit</a>
+            </div>
         </div>
+    </div>
+
+    <div class="col-xs-12 col-lg-12 col-md-12">
+        <h1>Modifier stock magasin</h1>
+        <table id="table_product_stock_store" class="table">
+            <thead>
+            <tr>
+                <th>Stock magasin</th>
+                <th>Quantité en entrée</th>
+                <th>Quantité en sortie</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="product-link">
+                <td>{{product.prod_stock_store}}</td>
+                <td>
+                    <form novalidate>
+                        <div class="form-group no-margin">
+                            <input required class="form-control" type="number" min="0" step="1" name="qt_in"
+                                   ng-model="qt_in"/>
+                            <input type="image" src="media/img/ok.png"
+                                   ng-click="in_product(product.prod_uuid, qt_in, $event)"/>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <form novalidate>
+                        <div class="form-group no-margin">
+                            <input required class="form-control" type="number" min="0" step="1" name="qt_out"
+                                   ng-model="qt_out"/>
+                            <input type="image" src="media/img/ok.png"
+                                   ng-click="out_product(product.prod_uuid, qt_out, $event)"/>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="col-xs-12 col-lg-12 col-md-12 ">
         <div ng-if="role=='admin'" ng-controller="LineProdController">
             <h1>Activité sur le produit</h1>
 
-            <div>
-                {{line}}
-            </div>
             <table id="table_lineprod" class="table">
                 <thead>
                 <tr>
