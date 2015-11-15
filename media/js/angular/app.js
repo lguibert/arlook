@@ -1,4 +1,4 @@
-var app = angular.module('arlook', ['ngRoute', "ngCookies"]);
+var app = angular.module('arlook', ['ngRoute', "ngCookies", "chart.js"]);
 var server = "http://dev.lucasguibert.com:8000/";
 
 
@@ -18,12 +18,6 @@ app.controller('MainController', ['$scope', '$rootScope', 'LoadingState', functi
     $rootScope.$on('ChangedState', function () {
         $scope.loading = LoadingState.getLoadingState();
     });
-
-    /*$rootScope.date_format = function(date){
-        console.log(date);
-        var datesplit = date.split("T");
-        return datesplit[0];
-    };*/
 }]);
 
 app.factory('superCache', ['$cacheFactory', function ($cacheFactory) {
