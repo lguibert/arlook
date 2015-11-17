@@ -77,7 +77,6 @@ app.controller('BilanController', ['$scope', '$rootScope', 'superCache', 'BilanF
         });
 
         $scope.default = function (){
-            console.log("ouh yééé");
             bilan_default();
         };
     }]);
