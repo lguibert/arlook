@@ -10,11 +10,11 @@
                 <li>CP: {{client['client_zipcode']}}</li>
 
                 <li>Email: {{client['client_email']}}</li>
-
-                <li>Dernière modification: {{client['client_lastmodification'] | date:'dd/MM/yyyy à HH:mm:ss'}}</li>
+                <li>Dernière visite: {{client['client_visit'][client['client_visit'].length - 1]}} ({{client['client_visit'].length}} visites au total) </li>
             </ul>
 
             <div class="controllers-product">
+                <a ng-click="update_visit(client['client_uuid'])" class="btn btn-default">Mettre à jour la visite</a>
                 <a ng-href="#/client/update/{{client['client_uuid']}}" class="btn btn-primary">Modifier le client</a>
             </div>
         </div>

@@ -3,7 +3,7 @@ app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
         clients: false,
         getClients: function () {
             var deferred = $q.defer();
-            $http.get(server + 'clients/', {cache: true})
+            $http.get(server + 'clients/')
                 .success(function (data) {
                     deferred.resolve(angular.fromJson(data));
                 })
@@ -55,6 +55,23 @@ app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
                 });
             return deferred.promise;
         }
+        ,
+        updateVisitClient: function (uuid) {
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: server + 'client/visit/',
+                data: uuid,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function (data) {
+                    deferred.resolve(angular.fromJson(data));
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
+        }
     };
 }]);
 
@@ -70,6 +87,8 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
 
         ClientsFactory.getClients().then(function (data) {
             $scope.clients = data;
+
+            console.log(data);
 
             LoadingState.setLoadingState(false);
             $scope.loading = LoadingState.getLoadingState();
@@ -100,10 +119,18 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
         )
         ;
     };
+
+    $scope.update_visit = function (uuid){
+        ClientsFactory.updateVisitClient(uuid).then(function () {
+            $route.reload();
+        }, function (msg) {
+            displayMessage(msg, "error");
+        });
+    };
 }]);
 
-app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'ClientsFactory', 'LoadingState', '$routeParams', '$location',
-    function ($scope, $rootScope, superCache, ClientsFactory, LoadingState, $routeParams, $location) {
+app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'ClientsFactory', 'LoadingState', '$routeParams', '$location', '$route',
+    function ($scope, $rootScope, superCache, ClientsFactory, LoadingState, $routeParams, $location, $route) {
         var cache = superCache.get('client');
 
         if (cache) {
@@ -113,7 +140,7 @@ app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'Clien
             $scope.loading = LoadingState.getLoadingState();
 
             ClientsFactory.getClient($routeParams.uuid).then(function (data) {
-                $scope.client = data[0].fields;
+                $scope.client = data;
 
                 LoadingState.setLoadingState(false);
                 $scope.loading = LoadingState.getLoadingState();
@@ -128,6 +155,14 @@ app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'Clien
             ClientsFactory.updateClient(client).then(function (data) {
                 $location.path("/client/" + data[0]['fields'].client_uuid);
                 displayMessage("Mise à jour effectuée.", "success");
+            }, function (msg) {
+                displayMessage(msg, "error");
+            });
+        };
+
+        $scope.update_visit = function (uuid){
+            ClientsFactory.updateVisitClient(uuid).then(function () {
+                $route.reload();
             }, function (msg) {
                 displayMessage(msg, "error");
             });
