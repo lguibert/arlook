@@ -15,11 +15,31 @@ app.factory('UserFactory', ['$http', '$q', function ($http, $q) {
                     deferred.reject(data);
                 });
             return deferred.promise;
+        },
+        addUser: function (user) {
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: server + 'user/new/',
+                data: user,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function (data) {
+                    deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
         }
     };
 }]);
 
-app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$location', function ($scope, $rootScope, UserFactory, $location) {
+app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$location', '$route', function ($scope, $rootScope, UserFactory, $location, $route) {
+    $scope.user = {
+        superuser : false
+    };
+
     $scope.update_password = function(user){
         UserFactory.updateUser([md5(user.password), $rootScope.globals.currentUser.username]).then(function () {
             $location.path("/logout");
@@ -28,6 +48,16 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
             displayMessage(msg, "error");
         });
     };
+
+    $scope.add_new = function (user) {
+        user.password = md5(user.password);
+        UserFactory.addUser(user).then(function () {
+            $route.reload();
+            displayMessage("Création effectuée.", "success");
+        }, function (msg) {
+            displayMessage(msg, "error");
+        });
+    }
 }]);
 
 app.directive('passwordcheck', function($q) {

@@ -41,6 +41,7 @@
                     <li><a href="#/client/new" class="navbar-brand">Ajouter un client</a></li>
                     <li><a href="#/myaccount/" class="navbar-brand">Mon compte</a></li>
                     <li><a href="#/bilan/" ng-if="role == 'admin'" class="navbar-brand">Bilan</a></li>
+                    <li><a href="#/user/new" ng-if="role == 'admin'" class="navbar-brand">Créer un utilisateur</a></li>
                 </ul>
                 <div class="navbar-form navbar-right">
                     <a href="#" class="form-control" ng-click="logout()">Déconnexion</a>

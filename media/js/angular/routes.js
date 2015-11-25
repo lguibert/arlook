@@ -11,6 +11,8 @@ app.config(['$routeProvider', function ($routeProvider) {
         .when('/client/update/:uuid', {templateUrl: 'templates/client/update_client.html'})
         .when('/client/:uuid/', {templateUrl: 'templates/client/client.html'})
 
+        .when('/user/new/', {templateUrl: 'templates/user/add_user.html', data: {role: ['admin']}})
+
         .when('/myaccount/', {templateUrl: 'templates/account.html'})
 
         .when('/bilan/', {templateUrl: 'templates/bilan.html', data: {role: ['admin']}})

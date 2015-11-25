@@ -1,0 +1,53 @@
+<div class="container" ng-controller="UserController">
+    <h1>Création d'un nouvel utilisateur</h1>
+    <form autocomplete="off" role="form" name="addUserForm" novalidate class="simple-form"
+          ng-submit="addUserForm.$valid">
+        <input style="display:none">
+        <input type="password" style="display:none">
+
+        <div class="form-group">
+            <label for="name">Prénom (servira d'identifiant de connexion) <span class="indice-info">*</span> </label>
+            <input class="form-control" id="name" name="name" type="text" autocomplete="off" ng-model="user.name"
+                   required/>
+
+            <div ng-show="addUserForm.$submitted || addUserForm.name.$touched">
+                <div class="error" ng-show="addUserForm.name.$error.required">Le prénom est obligatoire.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mot de passe <span class="indice-info">*</span> </label>
+            <input class="form-control" id="password" autocomplete="off" name="password" type="password"
+                   ng-model="user.password"
+                   required/>
+
+            <div ng-show="addUserForm.$submitted || addUserForm.password.$touched">
+                <div class="error" ng-show="addUserForm.password.$error.required">Le mot de passe est obligatoire.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox">
+                <label for="superuser">
+                    <input id="superuser" name="superuser" type="checkbox" ng-model="user.superuser"/>
+                    Faire de cet utilisateur un administrateur
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" id="email" name="email" type="email" ng-model="user.email"/>
+        </div>
+
+        <div class="infos">
+            <p><span class="indice-info">*</span> : Informations obligatoires</p>
+        </div>
+
+
+        <input class="btn btn-default" type="submit" ng-click="add_new(user)" ng-disabled="addUserForm.$invalid"
+               ng-class="{true: 'disabled'}[addUserForm.$invalid]"
+               value="Enregistrer"/>
+    </form>
+</div>
