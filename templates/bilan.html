@@ -1,8 +1,29 @@
 <div class="container">
     <h1>Bilan</h1>
     <input type="date" ng-model="perfect_date">
+
     <div class="col-xs-12 col-lg-12 col-md-12" ng-controller="BilanController">
         <button class="btn btn-default" ng-click="default()">Remettre à zéro</button>
-        <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"></canvas>
+
+        <div class="col-xs-12 col-lg-12 col-md-12" ng-if="bilans">
+        <table id="table_bilans" class="table">
+            <thead>
+                <th>Utilisateur</th>
+                <th>Jour</th>
+                <th>Semaine</th>
+                <th>Mois</th>
+                <th>Tout</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="bilan in bilans" on-finish-render="ngRepeatFinished">
+                    <td>{{bilan[0]}}</td>
+                    <td>{{bilan[1]}}</td>
+                    <td>{{bilan[2]}}</td>
+                    <td>{{bilan[3]}}</td>
+                    <td>{{bilan[4]}}</td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
 </div>

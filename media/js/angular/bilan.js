@@ -50,11 +50,20 @@ app.controller('BilanController', ['$scope', '$rootScope', 'superCache', 'BilanF
         $scope.loading = LoadingState.getLoadingState();
         bilan_default();
 
+        $scope.$on('ngRepeatFinished', function() {
+            $('#table_bilans').DataTable({
+                "language" :{
+                    "url": "media/french.json"
+                }
+            });
+        });
+
 
         function bilan_default(){
             BilanFactory.getBilan().then(function (data) {
-                $scope.labels = ['Jour','Semaine','Mois','Année'];
-                $scope.data = [data];
+                //$scope.labels = ['Jour','Semaine','Mois','Année'];
+                $scope.bilans = data;
+                console.log(data);
                 LoadingState.setLoadingState(false);
                 $scope.loading = LoadingState.getLoadingState();
             }, function (msg) {
@@ -69,6 +78,7 @@ app.controller('BilanController', ['$scope', '$rootScope', 'superCache', 'BilanF
                 d = new Date($scope.perfect_date).toJSON();
                 BilanFactory.getBilanByPerfectDate(d).then(function (data) {
                     $scope.data = [data];
+                    console.log(data);
                     $scope.labels = ['Date sélectionnée'];
                 }, function (msg) {
                     displayMessage(msg, "error");

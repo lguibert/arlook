@@ -3,7 +3,7 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
         products: false,
         getProducts: function () {
             var deferred = $q.defer();
-            $http.get(server + 'products/', {cache: true})
+            $http.get(server + 'products/')
                 .success(function (data) {
                     deferred.resolve(angular.fromJson(data));
                 })
