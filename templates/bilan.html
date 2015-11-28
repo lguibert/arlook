@@ -17,10 +17,10 @@
             <tbody>
                 <tr ng-repeat="bilan in bilans" on-finish-render="ngRepeatFinished">
                     <td>{{bilan[0]}}</td>
-                    <td>{{bilan[1]}}</td>
-                    <td>{{bilan[2]}}</td>
-                    <td>{{bilan[3]}}</td>
-                    <td>{{bilan[4]}}</td>
+                    <td>{{bilan[1][0].day}}</td>
+                    <td>{{bilan[1][0].week}}</td>
+                    <td>{{bilan[1][0].month}}</td>
+                    <td>{{bilan[1][0].all}}</td>
                 </tr>
             </tbody>
         </table>
