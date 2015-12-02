@@ -74,19 +74,6 @@ app.factory('ProductsFactory', ['$http', '$q', function ($http, $q) {
     };
 }]);
 
-app.directive('onFinishRender', function ($timeout) {
-        return {
-            restrict: 'A',
-            link: function (scope) {
-                if (scope.$last === true) {
-                    $timeout(function () {
-                        scope.$emit('ngRepeatFinished');
-                    });
-                }
-            }
-        }
-    });
-
 app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'ProductsFactory', 'LoadingState', 'fileReader', '$route', '$location',
     function ($scope, $rootScope, superCache, ProductsFactory, LoadingState, fileReader, $route, $location) {
     var cache = superCache.get('products');

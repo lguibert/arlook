@@ -1,20 +1,23 @@
 <div class="container">
-    <h1>Bilan</h1>
-    <input type="date" ng-model="perfect_date">
-
     <div class="col-xs-12 col-lg-12 col-md-12" ng-controller="BilanController">
-        <button class="btn btn-default" ng-click="default()">Remettre à zéro</button>
+        <h1>Bilan des ventes</h1>
+
+        <div class="bilan_controls">
+            <label for="perfect_date">Changer la date</label>
+            <input name="perfect_date" id="perfect_date" type="date" ng-model="perfect_date">
+            <div>Date active: <span>{{active_date | date:'dd/MM/yyyy'}}</span></div>
+        </div>
 
         <div class="col-xs-12 col-lg-12 col-md-12" ng-if="bilans">
-        <table id="table_bilans" class="table">
-            <thead>
+            <table id="table_bilans" class="table">
+                <thead>
                 <th>Utilisateur</th>
                 <th>Jour</th>
                 <th>Semaine</th>
                 <th>Mois</th>
                 <th>Tout</th>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr ng-repeat="bilan in bilans" on-finish-render="ngRepeatFinished">
                     <td>{{bilan[0]}}</td>
                     <td>{{bilan[1][0].day}}</td>
@@ -22,8 +25,30 @@
                     <td>{{bilan[1][0].month}}</td>
                     <td>{{bilan[1][0].all}}</td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
 
+        <div class="col-xs-12 col-lg-12 col-md-12" ng-if="bilans_visit">
+            <h1>Bilan des prestations</h1>
+            <table id="table_visit_bilans" class="table">
+                <thead>
+                <th>Utilisateur</th>
+                <th>Jour</th>
+                <th>Semaine</th>
+                <th>Mois</th>
+                <th>Tout</th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="bilan in bilans_visit track by $index" on-finish-render2="ngRepeatFinished2">
+                    <td>{{bilan[0]}}</td>
+                    <td>{{bilan[1][0].day}}</td>
+                    <td>{{bilan[1][0].week}}</td>
+                    <td>{{bilan[1][0].month}}</td>
+                    <td>{{bilan[1][0].all}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

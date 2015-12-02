@@ -1,4 +1,4 @@
-var app = angular.module('arlook', ['ngRoute', "ngCookies", "chart.js"]);
+var app = angular.module('arlook', ['ngRoute', "ngCookies"]);
 var server = "http://dev.lucasguibert.com:8000/";
 
 
