@@ -113,6 +113,11 @@ app.controller('BilanController', ['$scope', '$rootScope', 'superCache', 'BilanF
                 }, function (msg) {
                     displayMessage(msg, "error");
                 });
+                BilanFactory.getBilanVisitPerfect(d.getFullYear() + "-" + (parseInt(d.getMonth()) + 1).toString() + "-" + d.getDate()).then(function (data) {
+                    $scope.bilans_visit = data;
+                }, function (msg) {
+                    displayMessage(msg, "error");
+                });
             }
         });
     }]);
