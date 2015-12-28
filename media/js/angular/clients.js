@@ -88,8 +88,6 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
         ClientsFactory.getClients().then(function (data) {
             $scope.clients = data;
 
-            console.log(data);
-
             LoadingState.setLoadingState(false);
             $scope.loading = LoadingState.getLoadingState();
         }, function (msg) {
@@ -108,7 +106,6 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
     });
 
     $scope.add_new = function (client) {
-        console.log(client);
         ClientsFactory.addClient(client).then(function () {
                 displayMessage("Client enregistré.", "success");
                 $route.reload();

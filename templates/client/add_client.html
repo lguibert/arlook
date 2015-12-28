@@ -3,7 +3,7 @@
           ng-submit="addClientForm.$valid">
 
         <div class="form-group">
-            <label for="firstname">Prénom*: </label>
+            <label for="firstname">Prénom <span class="indice-info">*</span> </label>
             <input class="form-control" id="firstname" name="firstname" type="text" ng-model="client.firstname" required/>
 
             <div ng-show="addClientForm.$submitted || addClientForm.firstname.$touched">
@@ -14,7 +14,7 @@
         </div>
 
         <div class="form-group">
-            <label for="lastname">Nom*: </label>
+            <label for="lastname">Nom <span class="indice-info">*</span> </label>
             <input class="form-control" id="lastname" name="lastname" type="text" ng-model="client.lastname" required/>
 
             <div ng-show="addClientForm.$submitted || addClientForm.lastname.$touched">
@@ -25,32 +25,32 @@
         </div>
 
         <div class="form-group">
-            <label for="phone">Téléphone: </label>
+            <label for="phone">Téléphone </label>
             <input class="form-control" id="phone" name="phone" type="tel" ng-model="client.phone"/>
         </div>
 
         <div class="form-group">
-            <label for="email">E-mail: </label>
+            <label for="email">E-mail </label>
             <input class="form-control" id="email" name="email" type="text" ng-model="client.email"/>
         </div>
 
         <div class="form-group">
-            <label for="address">Adresse: </label>
+            <label for="address">Adresse </label>
             <input class="form-control" id="address" name="address" type="text" ng-model="client.address"/>
         </div>
 
         <div class="form-group">
-            <label for="town">Ville: </label>
+            <label for="town">Ville </label>
             <input class="form-control" id="town" name="town" type="text" ng-model="client.town"/>
         </div>
 
         <div class="form-group">
-            <label for="zipcode">Code postal: </label>
+            <label for="zipcode">Code postal </label>
             <input class="form-control" id="zipcode" name="zipcode" type="text" ng-model="client.zipcode"/>
         </div>
 
         <div class="infos">
-            <p>*: Informations obligatoires</p>
+            <p><span class="indice-info">*</span> : Informations obligatoires</p>
         </div>
 
         <input class="btn btn-default" type="submit" ng-click="add_new(client)" ng-disabled="addClientForm.$invalid"

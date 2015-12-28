@@ -31,6 +31,22 @@ app.factory('UserFactory', ['$http', '$q', function ($http, $q) {
                     deferred.reject(data);
                 });
             return deferred.promise;
+        },
+        getMyPresta: function (user, date) {
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: server + 'user/presta/',
+                data: [user, date],
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function (data) {
+                    deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
         }
     };
 }]);
@@ -39,6 +55,7 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
     $scope.user = {
         superuser : false
     };
+    $scope.active_date = new Date();
 
     $scope.update_password = function(user){
         UserFactory.updateUser([md5(user.password), $rootScope.globals.currentUser.username]).then(function () {
@@ -57,7 +74,40 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
         }, function (msg) {
             displayMessage(msg, "error");
         });
-    }
+    };
+
+    $scope.show_next = function(){
+        $(".hide-next + form").toggle();
+    };
+
+    $scope.$on('ngRepeatFinished', function() {
+        $('#table_visit_bilans').DataTable({
+            "language" :{
+                "url": "media/french.json"
+            }
+        });
+    });
+
+    $scope.getMyPrestation = function(){
+        UserFactory.getMyPresta($rootScope.globals.currentUser.username, null).then(function (data) {
+            $scope.my_presta = data;
+            console.log(data);
+        }, function (msg) {
+            displayMessage(msg, "error");
+        });
+    };
+
+    $scope.$watch("perfect_date", function () {
+        if ($scope.perfect_date) {
+            var d = new Date($scope.perfect_date);
+            $scope.active_date = d;
+            UserFactory.getMyPresta($rootScope.globals.currentUser.username, d.getFullYear() + "-" + (parseInt(d.getMonth()) + 1).toString() + "-" + d.getDate()).then(function (data) {
+                $scope.my_presta = data;
+            }, function (msg) {
+                displayMessage(msg, "error");
+            });
+        }
+    });
 }]);
 
 app.directive('passwordcheck', function($q) {

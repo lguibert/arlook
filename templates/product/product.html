@@ -1,11 +1,9 @@
 <div class="container" ng-controller="ProductController">
     <div class="col-xs-12 col-lg-12 col-md-12 product">
         <h1>{{product.prod_name}}</h1>
-        <img src="{{product.prod_image}}"/>
 
         <div id="infos">
             <ul>
-                <li>TVA: {{product.prod_tva_value}} %</li>
                 <li>Prix de vente: {{product.prod_sellprice}} €</li>
                 <li>Prix d'achat: {{product.prod_buyprice}} €</li>
                 <li>Date d'achat: {{product.prod_datebuy | date:'dd/MM/yyyy'}}</li>

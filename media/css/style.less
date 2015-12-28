@@ -212,3 +212,13 @@
     }
   }
 }
+
+.hide-next {
+  &:hover{
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  & + form{
+    display: none;
+  }
+}

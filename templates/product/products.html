@@ -7,7 +7,6 @@
             <tr>
                 <th>Nom</th>
                 <th>Stock vente</th>
-                <th>Image</th>
                 <th>Quantité en entrée</th>
                 <th>Quantité en sortie</th>
             </tr>
@@ -17,7 +16,6 @@
                 on-finish-render="ngRepeatFinished">
                 <td><a ng-href="#/product/{{product.fields['prod_uuid']}}"> {{product.fields['prod_name']}}</a></td>
                 <td>{{product.fields['prod_stock']}}</td>
-                <td class="tiny"><img src="{{product.fields['prod_image']}}"/></td>
                 <td class="padding-different">
                     <form novalidate>
                         <div class="form-group">

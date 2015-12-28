@@ -1,7 +1,7 @@
 <div class="container" ng-controller="UserController">
     <h1>Mon compte</h1>
 
-    <h2>Changer mon mot de passe</h2>
+    <h2 class="hide-next" ng-click="show_next()">Changer mon mot de passe</h2>
     <form class="simple-form" role="form" novalidate name="passwordChangeForm" ng-submit="passwordChangeForm.$valid">
         <div class="form-group">
             <label for="password">Mot de passe<span class="indice-info"><span class="indice-info">*</span></span> </label>
@@ -27,4 +27,27 @@
                ng-class="{true: 'disabled'}[passwordChangeForm.$invalid]"
                value="Enregistrer"/>
     </form>
+
+    <h2>Mes prestations</h2>
+    <div class="bilan_controls">
+        <label for="perfect_date">Changer la date</label>
+        <input name="perfect_date" id="perfect_date" type="date" ng-model="perfect_date">
+        <div>Date active: <span>{{active_date | date:'dd/MM/yyyy'}}</span></div>
+    </div>
+    <table id="table_visit_bilans" class="table" ng-init="getMyPrestation()">
+        <thead>
+        <th>Jour</th>
+        <th>Semaine</th>
+        <th>Mois</th>
+        <th>Tout</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="presta in my_presta track by $index" on-finish-render="ngRepeatFinished">
+            <td>{{presta[1][0].day}}</td>
+            <td>{{presta[1][0].week}}</td>
+            <td>{{presta[1][0].month}}</td>
+            <td>{{presta[1][0].all}}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
