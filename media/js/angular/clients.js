@@ -56,12 +56,12 @@ app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
             return deferred.promise;
         }
         ,
-        updateVisitClient: function (uuid) {
+        updateVisitClient: function (uuid, value) {
             var deferred = $q.defer();
             $http({
                 method: 'POST',
                 url: server + 'client/visit/',
-                data: uuid,
+                data: [uuid, value],
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             })
                 .success(function (data) {
@@ -117,8 +117,8 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
         ;
     };
 
-    $scope.update_visit = function (uuid){
-        ClientsFactory.updateVisitClient(uuid).then(function () {
+    $scope.update_visit = function (uuid, value){
+        ClientsFactory.updateVisitClient(uuid, value).then(function () {
             $route.reload();
         }, function (msg) {
             displayMessage(msg, "error");

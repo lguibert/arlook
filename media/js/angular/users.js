@@ -32,11 +32,11 @@ app.factory('UserFactory', ['$http', '$q', function ($http, $q) {
                 });
             return deferred.promise;
         },
-        getMyPresta: function (user, date) {
+        getMySell: function (user, date) {
             var deferred = $q.defer();
             $http({
                 method: 'POST',
-                url: server + 'user/presta/',
+                url: server + 'user/sell/',
                 data: [user, date],
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             })
@@ -88,9 +88,9 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
         });
     });
 
-    $scope.getMyPrestation = function(){
-        UserFactory.getMyPresta($rootScope.globals.currentUser.username, null).then(function (data) {
-            $scope.my_presta = data;
+    $scope.getMySell = function(){
+        UserFactory.getMySell($rootScope.globals.currentUser.username, null).then(function (data) {
+            $scope.my_sell = data;
             console.log(data);
         }, function (msg) {
             displayMessage(msg, "error");

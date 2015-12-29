@@ -95,6 +95,7 @@ app.controller('BilanController', ['$scope', '$rootScope', 'superCache', 'BilanF
 
             BilanFactory.getBilanVisit().then(function (data) {
                 $scope.bilans_visit = data;
+                console.log(data);
                 LoadingState.setLoadingState(false);
                 $scope.loading = LoadingState.getLoadingState();
             }, function (msg) {
