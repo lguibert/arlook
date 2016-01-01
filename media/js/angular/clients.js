@@ -56,12 +56,12 @@ app.factory('ClientsFactory', ['$http', '$q', function ($http, $q) {
             return deferred.promise;
         }
         ,
-        updateVisitClient: function (uuid, value) {
+        updateVisitClient: function (uuid, value, username) {
             var deferred = $q.defer();
             $http({
                 method: 'POST',
                 url: server + 'client/visit/',
-                data: [uuid, value],
+                data: [uuid, value, username],
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             })
                 .success(function (data) {
@@ -118,8 +118,9 @@ app.controller('ClientsController', ['$scope', '$rootScope', 'superCache', 'Clie
     };
 
     $scope.update_visit = function (uuid, value){
-        ClientsFactory.updateVisitClient(uuid, value).then(function () {
+        ClientsFactory.updateVisitClient(uuid, value, $rootScope.globals.currentUser.username).then(function () {
             $route.reload();
+            displayMessage("Mise à jour effectuée.", "success");
         }, function (msg) {
             displayMessage(msg, "error");
         });
@@ -157,9 +158,10 @@ app.controller('ClientController', ['$scope', '$rootScope', 'superCache', 'Clien
             });
         };
 
-        $scope.update_visit = function (uuid){
-            ClientsFactory.updateVisitClient(uuid).then(function () {
+        $scope.update_visit = function (uuid, value){
+            ClientsFactory.updateVisitClient(uuid, value, $rootScope.globals.currentUser.username).then(function () {
                 $route.reload();
+                displayMessage("Mise à jour effectuée.", "success");
             }, function (msg) {
                 displayMessage(msg, "error");
             });

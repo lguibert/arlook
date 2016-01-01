@@ -74,8 +74,8 @@ app.factory('ProductFactory', ['$http', '$q', function ($http, $q) {
     };
 }]);
 
-app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'ProductFactory', 'LoadingState', 'fileReader', '$routeParams', '$location', '$route',
-    function ($scope, $rootScope, superCache, ProductFactory, LoadingState, fileReader, $routeParams, $location, $route) {
+app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'ProductFactory', 'LoadingState', 'fileReader', '$routeParams', '$location',
+    function ($scope, $rootScope, superCache, ProductFactory, LoadingState, fileReader, $routeParams, $location) {
         var cache = superCache.get('product');
 
         if (cache ) {
@@ -186,7 +186,7 @@ app.controller('ProductController', ['$scope', '$rootScope', 'superCache', 'Prod
 
             ProductFactory.updateProduct(product).then(function (data) {
                 $location.path("/product/" + data[0]['fields'].prod_uuid);
-                displayMessage("Mise à jour OP!", "success");
+                displayMessage("Modification effectuée.", "success");
             }, function (msg) {
                 displayMessage(msg, "error");
             });

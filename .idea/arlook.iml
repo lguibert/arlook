@@ -4,10 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="angular" level="application" />
-    <orderEntry type="library" name="angular-route" level="application" />
-    <orderEntry type="library" name="angular-animate" level="application" />
-    <orderEntry type="library" name="angular-sanitize" level="application" />
-    <orderEntry type="library" name="jquery.dataTables" level="application" />
+    <orderEntry type="library" name="datatables" level="application" />
+    <orderEntry type="library" name="date-euro" level="application" />
   </component>
 </module>

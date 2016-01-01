@@ -67,7 +67,7 @@
                 <tr>
                     <th>Action</th>
                     <th>Utilisateur</th>
-                    <th>Date et heure</th>
+                    <th>Date et Heure</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,7 +75,7 @@
                     on-finish-render="ngRepeatFinished">
                     <td>{{line[0]}}</td>
                     <td>{{line[1]}}</td>
-                    <td>{{line[2]}}</td>
+                    <td>{{line[2] | date: "dd/MM/yyyy HH:mm:ss"}}</td>
                 </tr>
                 </tbody>
             </table>

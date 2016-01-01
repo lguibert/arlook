@@ -141,7 +141,7 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
         LoadingState.setLoadingState(true);
         $scope.loading = LoadingState.getLoadingState();
 
-        ProductsFactory.outProduct([uuid, nb]).then(function () {
+        ProductsFactory.outProduct([uuid, nb, $rootScope.globals.currentUser.username]).then(function () {
             LoadingState.setLoadingState(false);
             $scope.loading = LoadingState.getLoadingState();
             displayMessage("Modification effectuée.", "success");

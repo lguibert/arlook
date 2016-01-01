@@ -48,18 +48,21 @@ app.controller('LineProdController', ['$scope', '$rootScope', 'superCache', 'Lin
             });
         }
 
-        $scope.$on('ngRepeatFinished', function() {
+        $scope.$on('ngRepeatFinished', function () {
             $('#table_lineprod').DataTable({
-                "language" :{
+                "language": {
                     "url": "media/french.json"
                 },
+                columnDefs: [
+                    { type: 'date-euro', targets: 2 }
+                ],
                 "order": [
                     [2, "desc"]
                 ]
             });
         });
 
-}]);
+    }]);
 
 app.controller('LineClientController', ['$scope', '$rootScope', 'superCache', 'LineFactory', 'LoadingState', '$routeParams',
     function ($scope, $rootScope, superCache, LineFactory, LoadingState, $routeParams) {
@@ -83,11 +86,14 @@ app.controller('LineClientController', ['$scope', '$rootScope', 'superCache', 'L
             });
         }
 
-        $scope.$on('ngRepeatFinished', function() {
+        $scope.$on('ngRepeatFinished', function () {
             $('#table_lineclient').DataTable({
-                "language" :{
+                "language": {
                     "url": "media/french.json"
                 },
+                columnDefs: [
+                    { type: 'date-euro', targets: 2 }
+                ],
                 "order": [
                     [2, "desc"]
                 ]
