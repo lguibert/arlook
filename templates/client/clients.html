@@ -21,8 +21,10 @@
                 <td>{{client['client_email']}}</td>
                 <td>{{client['client_visit']}}</td>
                 <td>
-                    <input type="number" min="0" step="0.01" placeholder="Montant (en €)" ng-model="value_visit"/>
-                    <span ng-click="update_visit(client['client_uuid'], value_visit)" class="btn-default btn">Mettre à jour la visite</span>
+                    <form novalidate>
+                        <input class="big_number_input" type="number" min="0" step="0.01" placeholder="Montant (en €)" ng-model="value_visit"/>
+                        <button value="submit" ng-click="update_visit(client['client_uuid'], value_visit)" class="btn-default btn">Mettre à jour la visite</button>
+                    </form>
                 </td>
             </tr>
             </tbody>
