@@ -7,7 +7,6 @@
             <tr>
                 <th>Nom</th>
                 <th>Téléphone</th>
-                <th>Email</th>
                 <th>Dernière visite</th>
                 <th>Action</th>
             </tr>
@@ -18,11 +17,30 @@
                 <td><a ng-href="#/client/{{client['client_uuid']}}"> {{client['client_firstname']}}
                     {{client['client_lastname']}}</a></td>
                 <td>{{client['client_phone']}}</td>
-                <td>{{client['client_email']}}</td>
                 <td>{{client['client_visit']}}</td>
                 <td>
-                    <form novalidate>
-                        <input class="big_number_input" type="number" min="0" step="0.01" placeholder="Montant (en €)" ng-model="value_visit"/>
+                    <form novalidate class="form-inline">
+                        <input type="number" min="0" step="0.01" placeholder="Montant (en €)" ng-model="value_visit"/>
+                        <div id="typePayClient">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="typePay" id="typePay3" value="3" checked/>
+                                    Espèce
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="typePay" name="typePay" id="typePay1" value="1"/>
+                                    CB
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" ng-model="typePay" name="typePay" id="typePay2" value="2"/>
+                                    Chèque
+                                </label>
+                            </div>
+                        </div>
                         <button value="submit" ng-click="update_visit(client['client_uuid'], value_visit)" class="btn-default btn">Mettre à jour la visite</button>
                     </form>
                 </td>

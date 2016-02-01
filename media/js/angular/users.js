@@ -47,6 +47,22 @@ app.factory('UserFactory', ['$http', '$q', function ($http, $q) {
                     deferred.reject(data);
                 });
             return deferred.promise;
+        },
+        getMyPresta: function (user, date) {
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url: server + 'user/presta/',
+                data: [user, date],
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function (data) {
+                    deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
         }
     };
 }]);
@@ -98,10 +114,18 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
     };
 
     $scope.$watch("perfect_date", function () {
+        console.log("in perfect date");
         if ($scope.perfect_date) {
             var d = new Date($scope.perfect_date);
             $scope.active_date = d;
-            UserFactory.getMyPresta($rootScope.globals.currentUser.username, d.getFullYear() + "-" + (parseInt(d.getMonth()) + 1).toString() + "-" + d.getDate()).then(function (data) {
+            var stringed_date = d.getFullYear() + "-" + (parseInt(d.getMonth()) + 1).toString() + "-" + d.getDate();
+            UserFactory.getMySell($rootScope.globals.currentUser.username, stringed_date).then(function(data){
+                $scope.my_sell = data;
+            }, function(msg){
+                displayMessage(msg,"error");
+            });
+
+            UserFactory.getMyPresta($rootScope.globals.currentUser.username, stringed_date).then(function (data) {
                 $scope.my_presta = data;
             }, function (msg) {
                 displayMessage(msg, "error");

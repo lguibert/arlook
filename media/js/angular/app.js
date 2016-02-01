@@ -1,6 +1,6 @@
 var app = angular.module('arlook', ['ngRoute', "ngCookies"]);
-var server = "http://dev.lucasguibert.com:8111/";
-
+//var server = "http://dev.lucasguibert.com:8111/";
+var server = "http://localhost:8000/";
 
 app.service('LoadingState', ['$rootScope', function ($rootScope) {
     return {

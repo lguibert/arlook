@@ -137,11 +137,11 @@ app.controller('ProductsController', ['$scope', '$rootScope', 'superCache', 'Pro
         });
     };
 
-    $scope.out_product = function(uuid, nb, $event){
+    $scope.out_product = function(uuid, nb, typePay, $event){
         LoadingState.setLoadingState(true);
         $scope.loading = LoadingState.getLoadingState();
 
-        ProductsFactory.outProduct([uuid, nb, $rootScope.globals.currentUser.username]).then(function () {
+        ProductsFactory.outProduct([uuid, nb, typePay, $rootScope.globals.currentUser.username]).then(function () {
             LoadingState.setLoadingState(false);
             $scope.loading = LoadingState.getLoadingState();
             displayMessage("Modification effectuée.", "success");

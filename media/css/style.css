@@ -1,0 +1,214 @@
+@import "style_base.css";
+.fullsized {
+  height: 100%;
+  width: 100%;
+}
+.product-link,
+.client-link {
+  color: #424242;
+}
+.product-link:hover,
+.client-link:hover {
+  color: #1A237E;
+}
+.products,
+.clients {
+  border: solid black 1px;
+  margin: 5px;
+  height: 200px;
+  z-index: 1;
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+}
+.products .textable,
+.clients .textable {
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.products .textable h1,
+.clients .textable h1 {
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+.products .textable ul,
+.clients .textable ul {
+  position: relative;
+  width: 100%;
+  padding: 0;
+}
+.products .textable ul li,
+.clients .textable ul li {
+  list-style: none;
+}
+.products .textable ul li:before,
+.clients .textable ul li:before {
+  content: ">> ";
+}
+.products .imageable,
+.clients .imageable {
+  height: 100%;
+  width: 100%;
+}
+.products .imageable img,
+.clients .imageable img {
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  position: relative;
+  max-height: 200px;
+  max-width: 200px;
+  opacity: 0.3;
+}
+.tiny img {
+  width: 64px;
+  height: 64px;
+}
+.form-group .form-group-small {
+  font-size: small;
+  font-style: normal;
+  margin: 5px 0 0 20px;
+}
+.product {
+  border: none;
+}
+.product img {
+  max-height: 600px;
+  max-width: 600px;
+  float: right;
+}
+.product #infos {
+  float: left;
+}
+.product #infos .controllers-product {
+  margin: 25px 0 10px 0;
+}
+.product #infos .controllers-product .controllers-pack {
+  margin: 0 0 10px 0;
+}
+.error {
+  background-color: #FFCCCC;
+  padding: 5px;
+  margin: 5px;
+  color: #DA300E;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+.form-group img {
+  max-height: 200px;
+  max-width: 200px;
+}
+.big_number_input {
+  width: auto!important;
+}
+.table .odd {
+  background-color: #f9f9f9;
+}
+.table .odd:hover {
+  background-color: rgba(36, 235, 43, 0.07);
+}
+.table .even {
+  background-color: #ffffff;
+}
+.table .even:hover {
+  background-color: rgba(36, 235, 43, 0.07);
+}
+.table .even tr td .padding-different {
+  padding-bottom: 0 !important;
+}
+.table form div {
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+.table form div.no-margin {
+  margin-top: 0;
+}
+.table form input[type='number'] {
+  width: 100px;
+  display: inline-block;
+  vertical-align: top;
+}
+.table form input[type='image'] {
+  display: inline-block;
+  vertical-align: top;
+}
+.table form input[type='image']:active {
+  background-color: lightgrey;
+}
+.indice-info {
+  color: #DA300E;
+}
+#login {
+  position: absolute;
+  left: 35%;
+  overflow: hidden;
+  width: 480px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding-bottom: 20px;
+}
+#login form {
+  height: 100%;
+  width: 100%;
+}
+#login form button {
+  margin: 20px auto auto auto;
+  display: block;
+}
+#login form label {
+  margin-top: 20px;
+}
+.bilan_controls {
+  padding: 15px;
+  margin: 20px;
+  border: solid 1px lightgray;
+  display: inline-block;
+}
+.bilan_controls label {
+  margin-right: 10px;
+}
+.bilan_controls div {
+  display: inline-block;
+  font-style: italic;
+}
+.bilan_controls div span {
+  font-weight: bold;
+}
+#showed_current_user {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 18px;
+}
+#showed_current_user p {
+  color: #DA300E;
+}
+#showed_current_user p span {
+  color: yellow;
+}
+.hide-next:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.hide-next + form {
+  display: none;
+}
+#typePayProd {
+  display: inline-block;
+  margin: 0 5px 0 5px;
+}
+.product-link form input,
+.product-link form #typePayClient {
+  display: inline-block;
+}
+.product-link form input[type='number'] {
+  width: 120px;
+}
+.product-link form #typePayClient {
+  margin: 0 5px 0 5px;
+}

@@ -19,18 +19,40 @@
                 <td class="padding-different">
                     <form novalidate>
                         <div class="form-group">
-                            <input required class="form-control" type="number" min="0" step="1" name="qt_in" ng-model="qt_in"/>
+                            <input required class="form-control" type="number" min="0" step="1" name="qt_in"
+                                   ng-model="qt_in"/>
                             <input type="image" src="media/img/ok.png"
                                    ng-click="in_product(product.fields['prod_uuid'], qt_in, $event)"/>
                         </div>
                     </form>
                 </td>
                 <td class="padding-different">
-                    <form novalidate>
+                    <form novalidate class="form-inline">
                         <div class="form-group">
-                            <input required class="form-control" type="number" min="0" step="1" name="qt_out" ng-model="qt_out"/>
+                            <input required class="form-control" type="number" min="0" step="1" name="qt_out"
+                                   ng-model="qt_out"/>
+                            <div id="typePayProd">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="typePay" id="typePay3" value="3" checked/>
+                                        Espèce
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" ng-model="typePay" name="typePay" id="typePay1" value="1"/>
+                                        CB
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" ng-model="typePay" name="typePay" id="typePay2" value="2"/>
+                                        Chèque
+                                    </label>
+                                </div>
+                            </div>
                             <input type="image" src="media/img/ok.png"
-                                   ng-click="out_product(product.fields['prod_uuid'], qt_out, $event)"/>
+                                   ng-click="out_product(product.fields['prod_uuid'], qt_out, typePay, $event)"/>
                         </div>
                     </form>
                 </td>
