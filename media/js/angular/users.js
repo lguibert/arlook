@@ -97,6 +97,14 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
     };
 
     $scope.$on('ngRepeatFinished', function() {
+        $('#table_sell_bilans').DataTable({
+            "language" :{
+                "url": "media/french.json"
+            }
+        });
+    });
+
+    $scope.$on('ngRepeatFinished2', function() {
         $('#table_visit_bilans').DataTable({
             "language" :{
                 "url": "media/french.json"
@@ -111,6 +119,15 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
         }, function (msg) {
             displayMessage(msg, "error");
         });
+    };
+
+    $scope.getMyPresta = function(){
+      UserFactory.getMyPresta($rootScope.globals.currentUser.username, null).then(function(data){
+          $scope.my_presta = data;
+          console.log("presta: " + data);
+      }, function(msg){
+         display(msg, "error");
+      });
     };
 
     $scope.$watch("perfect_date", function () {
