@@ -212,3 +212,12 @@
 .product-link form #typePayClient {
   margin: 0 5px 0 5px;
 }
+.espece {
+  color: green;
+}
+.cheque {
+  color: saddlebrown;
+}
+.cb {
+  color: blue;
+}

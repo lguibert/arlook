@@ -123,10 +123,10 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
 
     $scope.getMyPresta = function(){
       UserFactory.getMyPresta($rootScope.globals.currentUser.username, null).then(function(data){
-          $scope.my_presta = data;
-          console.log("presta: " + data);
+          $scope.my_presta = data[0];
+          console.log(data[1]);
       }, function(msg){
-         display(msg, "error");
+         displayMessage(msg, "error");
       });
     };
 

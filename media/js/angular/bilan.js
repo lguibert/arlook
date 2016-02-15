@@ -28,12 +28,12 @@ app.factory('BilanFactory', ['$http', '$q', function ($http, $q) {
                 });
             return deferred.promise;
         },
-        getBilanVisit: function (id_user) {
+        getBilanVisit: function (username) {
             var deferred = $q.defer();
             $http({
                 method: 'POST',
                 url: server + 'bilan/visit/',
-                data: [id_user, null],
+                data: [username, null],
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             })
                 .success(function (data) {
@@ -44,12 +44,12 @@ app.factory('BilanFactory', ['$http', '$q', function ($http, $q) {
                 });
             return deferred.promise;
         },
-        getBilanVisitPerfect: function (data) {
+        getBilanVisitPerfect: function (username, data) {
             var deferred = $q.defer();
             $http({
                 method: 'POST',
                 url: server + 'bilan/visit/',
-                data: [$rootScope.globals.currentUser.username, data],
+                data: [username, data],
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             })
                 .success(function (data) {
@@ -99,7 +99,8 @@ app.controller('BilanController', ['$scope', '$rootScope', 'superCache', 'BilanF
             });
 
             BilanFactory.getBilanVisit($rootScope.globals.currentUser.username).then(function (data) {
-                $scope.bilans_visit = data;
+                $scope.bilans_visit = data[0];
+                $scope.type_pay = data[1];
                 console.log(data);
                 LoadingState.setLoadingState(false);
                 $scope.loading = LoadingState.getLoadingState();
@@ -115,7 +116,7 @@ app.controller('BilanController', ['$scope', '$rootScope', 'superCache', 'BilanF
                 var d = new Date($scope.perfect_date);
                 $scope.active_date = d;
                 var date_perfect = d.getFullYear() + "-" + (parseInt(d.getMonth()) + 1).toString() + "-" + d.getDate();
-                BilanFactory.getBilanByPerfectDate($rootScope.globals.currentUser.username, date_perfect).then(function (data) {
+                BilanFactory.getBilanByPerfectDate(date_perfect).then(function (data) {
                     $scope.bilans = data;
                 }, function (msg) {
                     displayMessage(msg, "error");

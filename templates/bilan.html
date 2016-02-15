@@ -42,10 +42,26 @@
                 <tbody>
                 <tr ng-repeat="bilan in bilans_visit track by $index" on-finish-render2="ngRepeatFinished2">
                     <td>{{bilan[0]}}</td>
-                    <td>{{bilan[1][0].day[0]}}</td>
-                    <td>{{bilan[1][0].week[0]}}</td>
-                    <td>{{bilan[1][0].month[0]}}</td>
-                    <td>{{bilan[1][0].all[0]}}</td>
+                    <td>{{bilan[2][0].day[0]}} (<span class="espece"
+                                                      title="{{type_pay[bilan[1]].day.espece}} paiement(s) en espèce">{{type_pay[bilan[1]].day.espece}}</span>, <span
+                            class="cheque" title="{{type_pay[bilan[1]].day.cheque}} paiement(s) en chèque">{{type_pay[bilan[1]].day.cheque}}</span>,
+                        <span class="cb" title="{{type_pay[bilan[1]].day.cb}} paiement(s) en CB">{{type_pay[bilan[1]].day.cb}}</span>)
+                    </td>
+                    <td>{{bilan[2][0].week[0]}} (<span class="espece"
+                                                       title="{{type_pay[bilan[1]].week.espece}} paiement(s) en espèce">{{type_pay[bilan[1]].week.espece}}</span>, <span
+                            class="cheque" title="{{type_pay[bilan[1]].week.cheque}} paiement(s) en chèque">{{type_pay[bilan[1]].week.cheque}}</span>,
+                        <span class="cb" title="{{type_pay[bilan[1]].week.cb}} paiement(s) en CB">{{type_pay[bilan[1]].week.cb}}</span>)
+                    </td>
+                    <td>{{bilan[2][0].month[0]}} (<span class="espece"
+                                                        title="{{type_pay[bilan[1]].month.espece}} paiement(s) en espèce">{{type_pay[bilan[1]].month.espece}}</span>, <span
+                            class="cheque" title="{{type_pay[bilan[1]].month.cheque}} paiement(s) en chèque">{{type_pay[bilan[1]].month.cheque}}</span>,
+                        <span class="cb" title="{{type_pay[bilan[1]].month.cb}} paiement(s) en CB">{{type_pay[bilan[1]].month.cb}}</span>)
+                    </td>
+                    <td>{{bilan[2][0].all[0]}} (<span class="espece"
+                                                      title="{{type_pay[bilan[1]].all.espece}} paiement(s) en espèce">{{type_pay[bilan[1]].all.espece}}</span>, <span
+                            class="cheque" title="{{type_pay[bilan[1]].all.cheque}} paiement(s) en chèque">{{type_pay[bilan[1]].all.cheque}}</span>,
+                        <span class="cb" title="{{type_pay[bilan[1]].all.cb}} paiement(s) en CB">{{type_pay[bilan[1]].all.cb}}</span>)
+                    </td>
                 </tr>
                 </tbody>
             </table>

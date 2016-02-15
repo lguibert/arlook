@@ -30,18 +30,18 @@
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" ng-model="typePay" name="typePay" id="typePay1" value="1"/>
+                                    <input type="radio" ng-model="type_pay" name="typePay" id="typePay1" value="1"/>
                                     CB
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" ng-model="typePay" name="typePay" id="typePay2" value="2"/>
+                                    <input type="radio" ng-model="type_pay" name="typePay" id="typePay2" value="2"/>
                                     Chèque
                                 </label>
                             </div>
                         </div>
-                        <button value="submit" ng-click="update_visit(client['client_uuid'], value_visit)" class="btn-default btn">Mettre à jour la visite</button>
+                        <button value="submit" ng-click="update_visit(client['client_uuid'], value_visit, type_pay)" class="btn-default btn">Mettre à jour la visite</button>
                     </form>
                 </td>
             </tr>
