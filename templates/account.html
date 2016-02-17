@@ -41,8 +41,8 @@
         </thead>
         <tbody>
         <tr ng-repeat="sell in my_sell track by $index" on-finish-render="ngRepeatFinished">
-            <td>{{sell[1][0].day}}</td>
-            <td>{{sell[1][0].month}}</td>
+            <td>{{sell[2][0].day}}</td>
+            <td>{{sell[2][0].month}}</td>
         </tr>
         </tbody>
     </table>
@@ -55,8 +55,14 @@
         </thead>
         <tbody>
         <tr ng-repeat="presta in my_presta track by $index" on-finish-render2="ngRepeatFinished2">
-            <td>{{presta[1][0].day}}</td>
-            <td>{{presta[1][0].month}}</td>
+            <td>{{presta[2][0].day}} (<span class="espece"
+                                            title="{{type_pay[presta[1]].day.espece}} paiement(s) en espèce">{{type_pay[presta[1]].day.espece}}</span>, <span
+                    class="cheque" title="{{type_pay[presta[1]].day.cheque}} paiement(s) en chèque">{{type_pay[presta[1]].day.cheque}}</span>,
+                <span class="cb" title="{{type_pay[presta[1]].day.cb}} paiement(s) en CB">{{type_pay[presta[1]].day.cb}}</span>)</td>
+            <td>{{presta[2][0].month}} (<span class="espece"
+                                              title="{{type_pay[presta[1]].month.espece}} paiement(s) en espèce">{{type_pay[presta[1]].month.espece}}</span>, <span
+                    class="cheque" title="{{type_pay[presta[1]].month.cheque}} paiement(s) en chèque">{{type_pay[presta[1]].month.cheque}}</span>,
+                <span class="cb" title="{{type_pay[presta[1]].month.cb}} paiement(s) en CB">{{type_pay[presta[1]].month.cb}}</span>)</td>
         </tr>
         </tbody>
     </table>

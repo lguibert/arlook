@@ -122,7 +122,8 @@ app.controller('BilanController', ['$scope', '$rootScope', 'superCache', 'BilanF
                     displayMessage(msg, "error");
                 });
                 BilanFactory.getBilanVisitPerfect($rootScope.globals.currentUser.username, date_perfect).then(function (data) {
-                    $scope.bilans_visit = data;
+                    $scope.bilans_visit = data[0];
+                    $scope.type_pay = data[1];
                 }, function (msg) {
                     displayMessage(msg, "error");
                 });

@@ -35,7 +35,7 @@ app.factory('UserFactory', ['$http', '$q', function ($http, $q) {
         getMySell: function (user, date) {
             var deferred = $q.defer();
             $http({
-                method: 'POST',
+                 method: 'POST',
                 url: server + 'user/sell/',
                 data: [user, date],
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -115,7 +115,6 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
     $scope.getMySell = function(){
         UserFactory.getMySell($rootScope.globals.currentUser.username, null).then(function (data) {
             $scope.my_sell = data;
-            console.log(data);
         }, function (msg) {
             displayMessage(msg, "error");
         });
@@ -124,14 +123,13 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
     $scope.getMyPresta = function(){
       UserFactory.getMyPresta($rootScope.globals.currentUser.username, null).then(function(data){
           $scope.my_presta = data[0];
-          console.log(data[1]);
+          $scope.type_pay = data[1];
       }, function(msg){
          displayMessage(msg, "error");
       });
     };
 
     $scope.$watch("perfect_date", function () {
-        console.log("in perfect date");
         if ($scope.perfect_date) {
             var d = new Date($scope.perfect_date);
             $scope.active_date = d;
@@ -143,7 +141,9 @@ app.controller('UserController', ['$scope', '$rootScope', 'UserFactory', '$locat
             });
 
             UserFactory.getMyPresta($rootScope.globals.currentUser.username, stringed_date).then(function (data) {
-                $scope.my_presta = data;
+                console.log(data[0]);
+                $scope.my_presta = data[0];
+                $scope.type_pay = data[1];
             }, function (msg) {
                 displayMessage(msg, "error");
             });
