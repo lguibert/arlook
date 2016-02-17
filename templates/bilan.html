@@ -1,5 +1,14 @@
 <div class="container">
-    <div class="col-xs-12 col-lg-12 col-md-12" ng-controller="BilanController">
+    <div class="form-inline" >
+        <form name="loginBilanForm" ng-if="!user_validated" ng-controller="UserController" class="col-xs-3 col-lg-3 col-md-3" ng-submit="login_bilan(credentials)" novalidate>
+            <input style="display:none">
+            <input type="password" style="display:none">
+            <label for="password">Mot de passe:</label>
+            <input id="password" type="password" ng-model="credentials.password" class="form-control" autocomplete="off"/>
+            <button type="submit" class="btn btn-primary">Validation</button>
+        </form>
+    </div>
+    <div class="col-xs-12 col-lg-12 col-md-12" ng-controller="BilanController" ng-if="user_validated">
         <h1>Bilan des ventes</h1>
 
         <div class="bilan_controls">
